@@ -1,0 +1,37 @@
+<div class="p-4 sm:ml-64">
+  <div *ngIf="categories">
+    <h1 class="text-3xl mb-5">Đang sửa danh mục: <span class="font-bold">{{ categories.name_ct }}</span></h1>
+    <form class="form_edit_category" (ngSubmit)="onSubmit()" [formGroup]="categoriesForm">
+      <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+          <label for="name_ct" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tên danh mục</label>
+          <input type="text" id="name_ct"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="name_ct" required />
+        </div>
+        <div>
+          <label for="tag_ct" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tag danh mục</label>
+          <input type="text" id="tag_ct"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="tag_ct" required />
+        </div>
+      </div>
+      <div class="mb-6">
+        <label for="description" class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Ảnh danh mục</label>
+        <input
+          class="block text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none mb-2"
+          aria-describedby="file_input_help" id="file_input" type="file" />
+        <!-- <img *ngIf="categories?.imageUrl" [src]="categories.imageUrl" class="h-24 w-24 object-cover" alt=""> -->
+      </div>
+      <div class="text-right">
+        <button type="submit"
+          class="text-white bg-primary hover:bg-secondary font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 px-20 rounded-lg text-sm w-full sm:w-auto py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Sửa
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Debug section to display the categories data -->
+
+</div>

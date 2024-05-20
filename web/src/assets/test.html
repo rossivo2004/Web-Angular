@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button và Box</title>
+    <style>
+        .coupon_checkout {
+            height: 0;
+            display: none;
+            overflow: hidden;
+            transition: height 0.3s;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="coupon_checkout_toggle mb-4  ">
+        <p>Bạn có mã ưu đãi? <button class="text-primary underline font-semibold coupon_checkout_toggle_btn"
+                onclick="toggleBox()">Ấn
+                vào đây để nhập mã</button></p>
+    </div>
+    <form
+        class="coupon_checkout max-w-[450px] border-dashed border-2 border-[#ddd] py-6 px-5 flex flex-col items-center mb-6">
+        <p class="mb-2">Nếu bạn có mã giảm giá, vui lòng điền vào phía bên dưới.</p>
+        <div class="flex justify-center">
+            <div>
+                <input type="text" class="h-10 rounded-lg border mr-2 px-2">
+            </div>
+            <div>
+                <button class="bg-primary text-white rounded-lg px-5 py-2">ÁP DỤNG</button>
+            </div>
+        </div>
+
+    </form>
+
+    <script>
+        var boxShown = false;
+
+        function toggleBox() {
+            if (!boxShown) {
+                var box = document.querySelector(".coupon_checkout");
+                box.style.display = "block";
+                setTimeout(function () {
+                    box.style.height = "100px";
+                }, 100); // Khoảng thời gian trước khi tăng chiều cao
+                boxShown = true;
+            } else {
+                var box = document.querySelector(".coupon_checkout");
+                box.style.height = "0px";
+                setTimeout(function () {
+                    box.style.display = "none";
+                }, 300); // 300 milliseconds để phù hợp với transition duration
+                boxShown = false;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

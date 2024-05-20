@@ -1,0 +1,441 @@
+<div class="slider z-0 mt-[120px] lg:mt-0">
+  <div class="slideshow-container relative">
+    <div class="mySlides fade">
+      <img src="https://images.pexels.com/photos/1379636/pexels-photo-1379636.jpeg?auto=compress&cs=tinysrgb&w=600"
+        class="h-[600px] w-full object-cover">
+    </div>
+
+    <div class="mySlides fade " style="display: none;">
+      <img src="https://images.pexels.com/photos/1379636/pexels-photo-1379636.jpeg?auto=compress&cs=tinysrgb&w=600"
+        class="h-[600px] w-full object-cover">
+    </div>
+
+    <div class="mySlides fade " style="display: none;">
+      <img
+        src="https://images.pexels.com/photos/36762/scarlet-honeyeater-bird-red-feathers.jpg?auto=compress&cs=tinysrgb&w=600"
+        class="h-[600px] w-full object-cover">
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+  </div>
+  <br>
+</div>
+
+<div class="home_product__hot">
+  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-full lg:px-40">
+    <div class="text-center font-bold text-3xl lg:text-[26px]">SẢN PHẨM NỔI BẬT</div>
+    <div
+      class="mt-6 grid grid-cols-2 lg:gap-x-6 gap-x-2 lg:gap-y-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 lg:mb-8 mb-8">
+
+      <!-- Start product box -->
+      <div class="relative" *ngFor="let product of products">
+        <a [routerLink]="['/product_detail', product._id]"
+          class="trs_1s shadow-2xl w-full lg:h-[380px] h-[280px] lg:p-5 p-2 rounded-lg flex flex-col justify-between relative  border-2 border-transparent hover:scale-[1.05] hover:cursor-pointer">
+          <div class="flex justify-center">
+            <img class="lg:w-[200px] lg:h-[200px] w-[150px] h-[150px] object-cover text-center"
+              src="https://img.freepik.com/free-psd/plum-fruit-isolated-transparent-background_191095-15165.jpg?size=626&ext=jpg"
+              alt="">
+          </div>
+
+          <div>
+            <div class="home_productBox__name text-xs lg:text-base">
+              {{product.name_pr}}
+            </div>
+            <div class="home_productBox__category text-sm  my-2 text-primary font-bold lg:text-sm ">
+              <kbd
+                class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">{{product.category_pr.category_pr_tag}}</kbd>
+            </div>
+            <div class="flex">
+              <div class="home_productBox__price_old mr-2 font-bold lg:text-[11px] text-xs text-[#BDBDBD] line-through">
+                {{product.price_pr}}
+              </div>
+              <div class="home_productBox__price font-bold lg:text-[13px] text-xs text-price">
+                100.000đ
+              </div>
+            </div>
+
+
+
+            <div class="flex items-center">
+              <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 22 20">
+                <path
+                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 22 20">
+                <path
+                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 22 20">
+                <path
+                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 22 20">
+                <path
+                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path
+                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">4.95</p>
+              <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
+              <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
+            </div>
+
+          </div>
+          <div class="sale-box" *ngIf="isDiscounted(product)">
+            - {{product.discount_pr}}%
+          </div>
+
+
+        </a>
+      </div>
+      <!-- End product box -->
+
+    </div>
+
+    <div class="text-center hover:underline-offset-1">
+      <a class="hover:text-secondary underline" [routerLink]="['/shop']">Xem tất cả</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="w-full mb-10">
+  <div class="flex lg:flex-row flex-col w-full lg:px-40 gap-4 px-4">
+    <div class="lg:w-2/3 w-full">
+      <div
+        class="w-full h-[400px] bg-[#fcf3ea] rounded-lg overflow-hidden relative p-[7%] flex flex-col justify-center">
+        <img class="lg:w-[60px] h-[60px] object-cover mb-4 lg:block hidden"
+          src="https://images.pexels.com/photos/19202326/pexels-photo-19202326/free-photo-of-dolomite-y.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="">
+        <h1 class="text-4xl mb-4 z-10 font-bold">Ăn uống lành mạnh <br> bắt đầu từ đây !</h1>
+        <p class="text-sm mb-4">Welcome to SnakeFood</p>
+        <div>
+          <a class="px-5 py-2 text-sm bg-primary hover:bg-secondary rounded-lg font-bold text-white z-10 relative"
+            href="#">Bắt
+            đầu
+            mua
+            sắm</a>
+        </div>
+        <img src="http://localhost:4200/assets/images/image-removebg-preview (22).png"
+          class="absolute bottom-0 right-0 z-0" alt="">
+      </div>
+    </div>
+    <div class="lg:w-2/6 w-full h-[400px] flex flex-col gap-4">
+      <div class="h-3/6 w-full home_im1__inn rounded-lg bg-[#e5cbc8] relative overflow-hidden flex items-center p-8">
+        <h1 class="z-10 text-2xl text-white font-bold">Organic <br>
+          Superfood</h1>
+      </div>
+      <div class="h-3/6 w-full rounded-lg bg-green-500 home_im2__inn"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- <div class="home_category__sh lg:px-40 mb-10 px-4">
+  <div class="w-full h-[115px] overflow-hidden">
+    <div class="swiper-container h-full">
+      <div class="swiper-wrapper h-full">
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+        <div class="swiper-slide bg-[#f1f8e9] rounded-lg">
+          <a href="" class="flex flex-col items-center justify-center h-full">
+            <img src="https://www.svgrepo.com/show/252065/organic-nutrition.svg" alt=""
+              class="h-[70px] w-[70px] hover:-translate-y-1" style="transition: 0.5s;">
+            <p class="font-bold">Organic</p>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div> -->
+
+<div class="home_product__sale lg:px-40 mb-20 px-4">
+  <div class="flex w-full gap-4 flex-col lg:flex-row">
+    <div class="h-[580px] w-full lg:w-1/5 gap-4 bg-orange-500 rounded-2xl flex home_product__sale-banner">
+    </div>
+    <div class="w-full lg:w-4/5 gap-4 flex flex-col">
+      <h1 class="w-full bg-primary text-white flex items-center justify-center py-2 rounded-lg font-bold">
+        Sản phẩm
+        giảm giá
+      </h1>
+      <div class="flex flex-col">
+        <!-- Start box -->
+        <div
+          class="w-full h-[500px] lg:h-[240px] flex border rounded-lg mb-4 overflow-hidden flex-col lg:flex-row relative">
+          <a href="" class="basis-1/3">
+            <img src="https://greenpath.qodeinteractive.com/wp-content/uploads/2023/09/h1-shop3-prod-1-img-1.jpg"
+              class="w-full h-full object-cover" alt="">
+          </a>
+          <div class="absolute top-1 right-1 lg:top-4 lg:right-6 bg-yellow-500 rounded-3xl text-black px-5 py-1">
+            -10%
+          </div>
+          <div class="basis-2/3 lg:p-8 flex flex-col justify-around relative p-2">
+            <p class="lg:text-base font-bold">Organic Avocado Packed With Healthy Fats</p>
+            <div class="flex items-center">
+              <div class="flex items-center">
+                <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor" viewBox="0 0 22 20">
+                  <path
+                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+                <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor" viewBox="0 0 22 20">
+                  <path
+                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+                <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor" viewBox="0 0 22 20">
+                  <path
+                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+                <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor" viewBox="0 0 22 20">
+                  <path
+                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+                <svg class="w-4 h-4 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path
+                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+                <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">4.95</p>
+                <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
+                <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="home_productBox__price_old mr-2 font-bold lg:text-[14px] text-xs text-[#BDBDBD] line-through">
+                100.000đ
+              </div>
+              <div class="home_productBox__price font-bold lg:text-[16px] text-xs text-price">
+                100.000đ
+              </div>
+            </div>
+            <div>
+              <button
+                class="bg-primary hover:bg-secondary flex items-center justify-center lg:px-5 px-2 lg:py-2 py-2 text-white font-bold rounded-lg">
+                <p class="lg:mr-2 mr-4 text-sm">Thêm vào giỏ hàng</p>
+                <i class="fa-solid fa-cart-arrow-down"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <!-- End box -->
+
+
+        <!-- End box -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="home_blog lg:px-40 px-4 lg:mb-10 mb-10">
+  <div class="w-full flex flex-col items-center">
+    <h1 class="text-[26px] font-bold">Bài viết mới nhất</h1>
+    <div class="w-full mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 lg:grid-cols-3 xl:gap-x-8 lg:mb-8">
+      <!-- Start -->
+      <div>
+        <div
+          class=" w-full lg:h-[440px] h-[380px]  rounded-lg flex flex-col justify-between relative overflow-hidden border-2 border-transparent hover:cursor-pointer ">
+          <a href="" class="w-full h-[200px]">
+            <img src="http://localhost:4200/assets/images/s3qqpek5.png" alt=""
+              class="w-full h-full object-cover rounded-lg">
+          </a>
+          <h1 class="text-xl font-bold">Organic food, fresh or processed</h1>
+          <p class="text-sm mb-2">Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
+            Donec
+            pharetra faucibus
+            leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend
+            tristique</p>
+          <a href="" class="text-base font-bold text-primary hover:text-secondary">Xem theem</a>
+        </div>
+      </div>
+      <!-- End -->
+      <!-- Start -->
+      <div>
+        <div
+          class=" w-full lg:h-[440px] h-[380px]  rounded-lg flex flex-col justify-between relative overflow-hidden border-2 border-transparent hover:cursor-pointer ">
+          <a href="" class="w-full h-[200px]">
+            <img src="http://localhost:4200/assets/images/s3qqpek5.png" alt=""
+              class="w-full h-full object-cover rounded-lg">
+          </a>
+          <h1 class="text-xl font-bold">Organic food, fresh or processed</h1>
+          <p class="text-sm mb-2">Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
+            Donec
+            pharetra faucibus
+            leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend
+            tristique</p>
+          <a href="" class="text-base font-bold text-primary hover:text-secondary">Xem theem</a>
+        </div>
+      </div>
+      <!-- End -->
+      <!-- Start -->
+      <div>
+        <div
+          class=" w-full lg:h-[440px] h-[380px]  rounded-lg flex flex-col justify-between relative overflow-hidden border-2 border-transparent hover:cursor-pointer ">
+          <a href="" class="w-full h-[200px]">
+            <img src="http://localhost:4200/assets/images/s3qqpek5.png" alt=""
+              class="w-full h-full object-cover rounded-lg">
+          </a>
+          <h1 class="text-xl font-bold">Organic food, fresh or processed</h1>
+          <p class="text-sm mb-2">Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
+            Donec
+            pharetra faucibus
+            leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend
+            tristique</p>
+          <a href="" class="text-base font-bold text-primary hover:text-secondary">Xem theem</a>
+        </div>
+      </div>
+      <!-- End -->
+      <!-- Start -->
+      <div>
+        <div
+          class=" w-full lg:h-[440px] h-[380px]  rounded-lg flex flex-col justify-between relative overflow-hidden border-2 border-transparent hover:cursor-pointer ">
+          <a href="" class="w-full h-[200px]">
+            <img src="http://localhost:4200/assets/images/s3qqpek5.png" alt=""
+              class="w-full h-full object-cover rounded-lg">
+          </a>
+          <h1 class="text-xl font-bold">Organic food, fresh or processed</h1>
+          <p class="text-sm mb-2">Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
+            Donec
+            pharetra faucibus
+            leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend
+            tristique</p>
+          <a href="" class="text-base font-bold text-primary hover:text-secondary">Xem theem</a>
+        </div>
+      </div>
+      <!-- End -->
+      <!-- Start -->
+      <div>
+        <div
+          class=" w-full lg:h-[440px] h-[380px]  rounded-lg flex flex-col justify-between relative overflow-hidden border-2 border-transparent hover:cursor-pointer ">
+          <a href="" class="w-full h-[200px]">
+            <img src="http://localhost:4200/assets/images/s3qqpek5.png" alt=""
+              class="w-full h-full object-cover rounded-lg">
+          </a>
+          <h1 class="text-xl font-bold">Organic food, fresh or processed</h1>
+          <p class="text-sm mb-2">Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
+            Donec
+            pharetra faucibus
+            leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend
+            tristique</p>
+          <a href="" class="text-base font-bold text-primary hover:text-secondary">Xem theem</a>
+        </div>
+      </div>
+      <!-- End -->
+      <!-- Start -->
+      <div>
+        <div
+          class=" w-full lg:h-[440px] h-[380px]  rounded-lg flex flex-col justify-between relative overflow-hidden border-2 border-transparent hover:cursor-pointer ">
+          <a href="" class="w-full h-[200px]">
+            <img src="http://localhost:4200/assets/images/s3qqpek5.png" alt=""
+              class="w-full h-full object-cover rounded-lg">
+          </a>
+          <h1 class="text-xl font-bold">Organic food, fresh or processed</h1>
+          <p class="text-sm mb-2">Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
+            Donec
+            pharetra faucibus
+            leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend
+            tristique</p>
+          <a href="" class="text-base font-bold text-primary hover:text-secondary">Xem theem</a>
+        </div>
+      </div>
+      <!-- End -->
+
+    </div>
+  </div>
+</div>

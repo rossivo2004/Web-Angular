@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* scroll-behavior: smooth !important; */
+}
+
+body {
+  /* font-family: "Reddit Mono", monospace; */
+  /* font-family: "Roboto", sans-serif; */
+  font-family: "Cabin", sans-serif;
+
+}
+
+.nav_menu__mobile {
+  transition: 0.5s;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.slideshow-container {
+  position: relative;
+  margin: auto;
+}
+
+.header_scroll {
+  transition: 0.5s;
+}
+
+.sale-box {
+  background: url(../images/sale.png) center center no-repeat;
+  background-size: 60px;
+  width: 60px;
+  height: 30px;
+  position: absolute;
+  top: 4px;
+  left: -4px;
+  color: white;
+  padding-left: 4px;
+
+}
+
+
+
+.home_im1__inn {
+  background-image: url('http://localhost:4200/assets/images/h1-img-7.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home_im2__inn {
+  background-image: url('http://localhost:4200/assets/images/s3qqpek5.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home_product__sale-banner {
+  background-image: url('https://images.pexels.com/photos/1391487/pexels-photo-1391487.jpeg?auto=compress&cs=tinysrgb&w=600');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.box_tranform {
+  transform: translateX(1000px);
+  transition: 1s;
+}
+
+.box_tranform-overplay {
+  transition: 1s;
+}
+
+.box_opacity {
+  opacity: 0;
+}
+
+.shop_filter__box {
+  transition: 1s;
+}
+
+.active {
+  /* background-color: #698141; */
+  /* color: 88a842; */
+}
+
+.content-box {
+  display: none;
+}
+
+.content-box.active {
+  display: block;
+  color: #fff;
+}
+
+.nav-list_item.active {
+  color: #fff;
+  background-color: #698141;
+}
+
+.admin_product__tg-edit {
+  transform: translate3d(950.6px, 120.8px, 0px) !important;
+}
+
+.box_dropdown {
+  display: none;
+}
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.5s;
+}
+
+.trs_1s {
+  transition: 1s;
+}
+
+.coupon_checkout {
+  height: 0;
+  display: none;
+  overflow: hidden;
+  transition: height 0.3s;
+  /* background-color: lightblue; */
+}
+
+.button_return__top {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(227, 227, 227, .9);
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color1);
+  cursor: pointer;
+  z-index: 100;
+}
+
+.hidden_btn {
+  display: none;
+}

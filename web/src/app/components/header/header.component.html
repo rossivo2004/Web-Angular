@@ -1,0 +1,261 @@
+<a href="#">
+  <div class="button_return__top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </div>
+</a>
+<header class="z-40 fixed lg:relative w-full top-0">
+  <div>
+    <div
+      class="header_top h-10 w-full border-b-[1px] border-[#c489033d] hidden lg:flex justify-between items-center font-bold text-xs px-40 bg-primary text-white">
+      <div class="hd_title flex text-xs">
+        <p>THỰC PHẨM MART, THỰC PHẨM CAO CẤP</p>
+      </div>
+      <div>
+        <p class="text-primary">Miễn phí vận chuyển cho đơn từ 200.000đ</p>
+      </div>
+      <div>
+        <div class="flex items-center">
+          <div class="flex items-center">
+            <img src="http://localhost:4200/assets/images/icon-hotline-ok.gif" alt="" class="w-[18px] h-[18px] mr-1">
+            <p>0362651934</p>
+          </div>
+          <div class="mx-3">|</div>
+          <div class="flex items-center">
+            <i class="fa-solid fa-truck-fast mr-1"></i>
+            <p>GIAO HÀNG SIÊU TỐC</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="header_center bg-primary text-white lg:px-40 px-6 flex items-center justify-between w-full h-16 lg:h-24">
+      <a href="" class="hd_logo">
+        <img
+          src="https://images.pexels.com/photos/19202326/pexels-photo-19202326/free-photo-of-dolomite-y.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="" class="h-14 w-14 object-cover">
+      </a>
+      <div class="hd_search hidden lg:block">
+        <form class="relative">
+          <span>
+            <input type="text"
+              class="w-[460px] h-12 rounded-lg pl-4 pr-10 outline-0 border-radius border bg-transparent"
+              placeholder="Search..." placeholder="Search here">
+          </span>
+          <button class="absolute top-[14px] right-[10px] hover:text-secondary">
+            <i class="fa-solid fa-magnifying-glass text-xl"></i>
+          </button>
+        </form>
+      </div>
+      <div class="hd_crtl flex items-center">
+        <div class="shrink-0 mx-3 hover:text-hover_1">
+          <a href=""><i class="fa-regular fa-user text-[24px]"></i></a>
+        </div>
+        <div class="shrink-0 mx-3 relative hover:text-hover_1">
+          <a href=""><i class="fa-regular fa-heart text-[24px]"></i></a>
+          <span
+            class="text-[12px] text-white absolute top-[-9px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-primary">0</span>
+        </div>
+        <div class="shrink-0 mx-3 flex btn_box__tranform hover:text-hover_1 hover:cursor-pointer">
+          <div class="relative mr-3">
+            <!-- <ion-icon name="cart-outline" class="text-[27px]"></ion-icon> -->
+            <i class="fa-solid fa-cart-shopping text-[24px]"></i>
+            <span
+              class="text-[12px] absolute top-[-6px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white">0</span>
+          </div>
+
+          <div class="hidden lg:block">0.00<span class="underline">đ</span></div>
+        </div>
+        <div class="shrink-0 ml-3 lg:hidden">
+          <i class="fa-solid fa-bars text-[24px] btn_nav__mobile hover:text-hover_1 hover:cursor-pointer"></i>
+        </div>
+      </div>
+    </div>
+    <div class="header_bottom hidden lg:flex px-40 w-full h-[60px]  items-center justify-between border-b">
+      <div class="flex">
+        <!-- <div class="dropdown h-[60px]">
+          <button
+            class="dropbtn w-[230px] h-[45px] px-5 rounded-lg bg-primary text-white flex items-center justify-between">
+            <i class="fa-solid fa-bars"></i>
+            <span>Phan loai</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div
+            class="dropdown-content bg-white text-black absolute top-[60px] w-[230px] p-3 rounded-b-lg border border-primary">
+            <a class="py-1 hover:text-primary" href="#">Link 1</a>
+            <a class="py-1 hover:text-primary" href="#">Link 2</a>
+            <a class="py-1 hover:text-primary" href="#">Link 3</a>
+          </div>
+        </div> -->
+        <ng-template #navListCategoriesContainer></ng-template>
+        <nav>
+          <ul class="flex items-center h-[60px] px-3 font-bold">
+            <li><a class="px-3 hover:text-secondary" routerLink="home">Home</a></li>
+            <li><a class="px-3 hover:text-secondary" routerLink="shop">Shop</a></li>
+
+            <li><a class=" px-3 hover:text-secondary" href="#">Bài viết</a></li>
+            <li><a class="px-3 hover:text-secondary" href="#">Liên hệ</a></li>
+            <li><a class="px-3 hover:text-secondary" href="#">Chúng tôi</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <a href="#" class="hover:text-secondary font-bold">
+          <i class="fa-solid fa-fire mr-1"></i>
+          <span class="">Sản phẩm bán chạy</span>
+        </a>
+      </div>
+    </div>
+    <div class="header_search__mobile lg:hidden w-full h-[55px] bg-primary flex items-center justify-center px-6">
+      <div class="relative w-full">
+        <input type="text"
+          class="w-full pl-3 pr-9 py-2 rounded-lg outline-none bg-transparent text-white border border-white">
+        <i class="fa-solid fa-magnifying-glass absolute top-2 right-2 text-2xl hover:text-hover_1 text-white"></i>
+      </div>
+    </div>
+
+    <!-- Start header scroll -->
+    <div
+      class="header_scroll hidden lg:block w-full h-[70px] fixed top-0 z-20 translate-y-[-1000px] bg-primary text-white border-b">
+      <div class="flex header_scroll__big lg:px-40 items-center justify-between h-full">
+        <div class="flex items-center">
+          <div>
+            <img
+              src="https://images.pexels.com/photos/19202326/pexels-photo-19202326/free-photo-of-dolomite-y.jpeg?auto=compress&cs=tinysrgb&w=600"
+              alt="" class="h-[60px] w-[60px]">
+          </div>
+          <nav>
+            <ul class="flex items-center h-[60px] px-3">
+              <li><a class="px-3" href="#">Trang chủ</a></li>
+              <li><a class="px-3" routerLink="['/shop']">Sản phẩm</a></li>
+              <li><a class="px-3" href="#">Bài viết</a></li>
+              <li><a class="px-3" href="#">Liên hệ</a></li>
+              <li><a class="px-3" href="#">Chúng tôi</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="flex items-center header_scroll__nav">
+          <div class="shrink-0 mx-3 hover:text-hover_1 hover:cursor-pointer">
+            <i class="btn_ctrl__hd-sc fa-solid fa-magnifying-glass text-[24px]"></i>
+          </div>
+          <div class="shrink-0 mx-3 hover:text-hover_1">
+            <a href=""><i class="fa-regular fa-user text-[24px]"></i></a>
+          </div>
+          <div class="shrink-0 mx-3 relative hover:text-hover_1">
+            <a href=""><i class="fa-regular fa-heart text-[24px]"></i></a>
+            <span
+              class="text-[12px] absolute top-[-9px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white">0</span>
+          </div>
+          <div class="shrink-0 mx-3 flex btn_box__tranform hover:text-hover_1 hover:cursor-pointer">
+            <div class="relative mr-3">
+              <!-- <ion-icon name="cart-outline" class="text-[27px]"></ion-icon> -->
+              <i class="fa-solid fa-cart-shopping text-[24px]"></i>
+              <span
+                class="text-[12px] absolute top-[-6px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-primary text-text">0</span>
+            </div>
+
+            <div class="hidden lg:block">0.00đ</div>
+          </div>
+        </div>
+      </div>
+      <div class=" h-full w-full header_scroll__input hidden">
+        <div class="flex items-center justify-center w-full h-full lg:px-40">
+          <form action="" class="w-full relative">
+            <input autofocus type="text" class="w-full py-3 pl-3 pr-6 outline-none text-primary rounded-lg"
+              placeholder="Search here">
+            <div
+              class="absolute top-[10px] right-2 rounded-full h-7 w-7 bg-primary text-white hover:cursor-pointer hover:bg-secondary flex items-center justify-center">
+              <i class="fa-solid fa-xmark  text-[24px] header_scroll__input-closed"></i>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <!-- End header scroll -->
+
+    <!-- Start nav mobile -->
+    <div class="lg:hidden" role="dialog" aria-modal="true">
+      <!-- Background backdrop, show/hide based on slide-over state. -->
+      <div
+        class="nav_menu__mobile  fixed inset-y-0 right-0 z-10 w-11/12 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div class="flex items-center justify-between">
+          <a href="#" class="-m-1.5 p-1.5">
+            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+          </a>
+          <button type="button" class="-m-2.5 rounded-md p-2.5 text-primary hover:text-secondary font-bold">
+            <span class="sr-only">Close menu</span>
+            <svg class="h-6 w-6 btn_closed_nav-mobile" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6">
+              <div class="-mx-3 h-auto truncate">
+                <button type="button"
+                  class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  aria-controls="disclosure-1" aria-expanded="false">
+                  Product
+                  <svg class="h-5 w-5 flex-none btn_disclosure" viewBox="0 0 20 20" fill="currentColor"
+                    aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <div class="mt-2 space-y-2 h-auto" id="disclosure-1">
+                  <a href="#"
+                    class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Analytics</a>
+                  <a href="#"
+                    class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Engagement</a>
+                  <a href="#"
+                    class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Security</a>
+                  <a href="#"
+                    class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Integrations</a>
+                  <a href="#"
+                    class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact
+                    sales</a>
+                </div>
+              </div>
+              <a href="#"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
+              <a href="#"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</a>
+              <a href="#"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
+            </div>
+            <div class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5">
+              <div
+                class="shrink-0 mx-3 hover:text-primary rounded-lg w-16 h-12 flex items-center border justify-center">
+                <a href=""><i class="fa-regular fa-user text-[24px] "></i></a>
+
+              </div>
+              <div
+                class="shrink-0 mx-3 hover:text-primary rounded-lg w-16 h-12 flex items-center border justify-center relative">
+                <a href=""><i class="fa-regular fa-heart text-[24px]"></i></a>
+                <span
+                  class="absolute top-[3px] right-[10px] w-5 h-5 flex items-center justify-center rounded-full bg-[#f1f8e9] text-primary">0</span>
+              </div>
+              <div
+                class="shrink-0 mx-3 hover:text-primary rounded-lg w-16 h-12 flex items-center border justify-center btn_box__tranform">
+                <div class="relative">
+                  <!-- <ion-icon name="cart-outline" class="text-[24px]"></ion-icon> -->
+                  <i class="fa-solid fa-cart-shopping text-[24px]"></i>
+                  <span
+                    class="absolute top-[-5px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-[#f1f8e9] text-primary">0</span>
+                </div>
+
+                <div class="hidden lg:block">0.00đ</div>
+              </div>
+            </div>
+            <a href="#"
+              class="w-full rounded-lg py-2 pl-3 pr-3.5 flex items-center justify-center bg-primary text-white my-4 text-base hover:bg-[#698141]">Features</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End nav mobile -->
+  </div>
+</header>

@@ -1,0 +1,11 @@
+<div class="dropdown h-[60px]">
+  <button class="dropbtn w-[230px] h-[45px] px-5 rounded-lg bg-primary text-white flex items-center justify-between">
+    <i class="fa-solid fa-bars"></i>
+    <span>Phân loại</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </button>
+  <div
+    class="dropdown-content bg-white text-black absolute top-[60px] w-[230px] p-3 rounded-b-lg border border-primary">
+    <a class="py-1 hover:text-primary" *ngFor="let category of categories">{{ category.name_ct }}</a>
+  </div>
+</div>
