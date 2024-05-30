@@ -99,8 +99,8 @@ export class Admin_productsComponent implements OnInit {
         this.productsForm.reset(); // Reset the form after submission
       },
       (error) => {
-        alert('Thêm sản phẩm thành công');
-        window.location.reload();
+        alert('Error');
+        // window.location.reload();
       }
     );
   }

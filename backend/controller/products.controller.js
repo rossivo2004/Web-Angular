@@ -59,7 +59,7 @@ async function getDiscountedProducts() {
 // lấy sản phẩm theo tag category
 async function getProductByCategoryTag(categoryTag) {
     try {
-        const result = await productsModel.find({ "category_pr.category_pr_tag": categoryTag });
+        const result = await productsModel.find({ "category_pr_tag": categoryTag });
         return result;
     } catch (error) {
         console.log('Lỗi khi lấy sản phẩm theo category tag:', error);
@@ -74,7 +74,7 @@ async function getRelatedProducts(productId) {
         if (!product) {
             throw new Error('Không tìm thấy sản phẩm');
         }
-        const relatedProducts = await productsModel.find({ 'category_pr.category_pr_tag': product.category_pr.category_pr_tag, _id: { $ne: productId } }).limit(4).lean();
+        const relatedProducts = await productsModel.find({ 'category_pr_tag': product.category_pr_tag, _id: { $ne: productId } }).limit(4).lean();
         return relatedProducts;
     } catch (error) {
         console.error('Lỗi khi lấy sản phẩm liên quan:', error);
@@ -109,14 +109,12 @@ async function insertProduct(body) {
         // Tạo đối tượng productModel với dữ liệu đã được thiết lập giá trị mặc định
         const productData = {
             name_pr,
-            category_pr: {
+
                 // category_pr_name,
-                category_pr_tag
-            },
+                category_pr_tag,
+
             price_pr: price_pr || 0,
-            image_pr: {
                 image_pr_1,
-            },
             description_pr,
             description_pr_detail,
             discount_pr: discount_pr || 0,
@@ -158,7 +156,7 @@ async function updateByIdProduct(id, body) {
         }
 
         // Truy cập dữ liệu từ body
-        const { name_pr, description_pr, description_pr_detail, price_pr, discount_pr, quantity_pr, view_pr, weight_pr, sale_pr, rating_pr, category_pr_tag, image_pr } = body;
+        const { name_pr, description_pr, description_pr_detail, price_pr, discount_pr, quantity_pr, view_pr, weight_pr, sale_pr, rating_pr, category_pr_tag, image_pr_1 } = body;
 
         // Cập nhật dữ liệu
         pro.name_pr = name_pr;
@@ -171,21 +169,8 @@ async function updateByIdProduct(id, body) {
         pro.weight_pr = weight_pr;
         pro.sale_pr = sale_pr;
         pro.rating_pr = rating_pr;
-
-        // Cập nhật category_pr_tag
-        // Cập nhật category_pr_tag
-        if (category_pr_tag) {
-            pro.category_pr.category_pr_tag = category_pr_tag;
-        }
-
-        // Cập nhật image_pr
-        if (image_pr) {
-            Object.keys(image_pr).forEach(key => {
-                if (pro.image_pr.hasOwnProperty(key)) {
-                    pro.image_pr[key] = image_pr[key];
-                }
-            });
-        }
+pro.category_pr_tag = category_pr_tag;
+pro.image_pr_1 = image_pr_1;
 
         // Lưu thay đổi vào cơ sở dữ liệu
         const result = await pro.save();

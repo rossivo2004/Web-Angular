@@ -3,140 +3,132 @@ const router = express.Router();
 const productsController = require('../controller/products.controller');
 const path = require('path');
 const multer = require('multer');
+const authen = require('../middleware/authen');
+const jwt = require('jsonwebtoken');
 
+// Middleware setup for file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const uploadPath = path.join(__dirname, '../public/images/');
+        cb(null, uploadPath);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const checkImg = (req, file, cb) => {
+    if (!file.originalname.match(/\.(png|jpg|webp|gif)$/)) {
+        return cb(new Error('Vui lòng nhập đúng định dạng'));
+    }
+    cb(null, true);
+};
+
+const upload = multer({ storage: storage, fileFilter: checkImg });
+
+// Route Handlers
 router.get('/', async (req, res) => {
     try {
         const products = await productsController.getAllProduct();
-        return res.status(200).json(products);
+        res.status(200).json(products);
     } catch (error) {
-        console.log("loi: ", error);
-        res.status(500).json({ mess: error });
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
     }
 });
 
 router.get('/productsHot', async (req, res) => {
     try {
         const products = await productsController.getProductsHot();
-        return res.status(200).json(products);
+        res.status(200).json(products);
     } catch (error) {
-        console.log("loi: ", error);
-        res.status(500).json({ mess: error });
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
     }
-})
+});
 
 router.get('/:id', async (req, res) => {
     try {
-        const { id } = req.params
-        const pro = await productsController.getProductById(id);
-        return res.status(200).json(pro)
+        const { id } = req.params;
+        const product = await productsController.getProductById(id);
+        res.status(200).json(product);
     } catch (error) {
-        console.log("lỗi: ", error);
-        throw error
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
     }
-})
+});
 
-//lấy sản phẩm sale ngẫu nhiên
 router.get('/discount/discountedProducts', async (req, res) => {
     try {
         const discountedProducts = await productsController.getDiscountedProducts();
-        return res.status(200).json(discountedProducts);
+        res.status(200).json(discountedProducts);
     } catch (error) {
-        console.log("Lỗi: ", error);
-        res.status(500).json({ mess: error });
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
     }
 });
 
-// lấy sản phẩm theo tag
 router.get('/tagname/:categoryTag', async (req, res) => {
     try {
-        const categoryTag = req.params.categoryTag; // Lấy giá trị categoryTag từ tham số URL
+        const { categoryTag } = req.params;
         const products = await productsController.getProductByCategoryTag(categoryTag);
-        return res.status(200).json(products);
+        res.status(200).json(products);
     } catch (error) {
-        console.error('Lỗi khi lấy sản phẩm theo category tag:', error);
-        res.status(500).json({ message: 'Đã xảy ra lỗi khi lấy sản phẩm theo category tag' });
+        console.error('Error fetching products by category tag:', error);
+        res.status(500).json({ message: 'An error occurred while fetching products by category tag' });
     }
 });
 
-
-//Lấy danh sách sản phẩm liên quan với sản phẩm hiển thị ở trang chi tiết
 router.get('/sanphamlienquan/:productid', async (req, res) => {
     try {
-        const productId = req.params.productid; // Lấy productId từ URL
-        const result = await productsController.getRelatedProducts(productId); // Truyền productId vào hàm
-        return res.status(200).json(result);
+        const { productid } = req.params;
+        const relatedProducts = await productsController.getRelatedProducts(productid);
+        res.status(200).json(relatedProducts);
     } catch (error) {
-        console.log("Lỗi: ", error);
-        res.status(500).json({ error: error.message }); // Trả về lỗi 500 nếu có lỗi xảy ra
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
     }
 });
 
 router.get('/page/:page', async (req, res) => {
     try {
         const page = parseInt(req.params.page);
-        const perPage = 2; // Số lượng sản phẩm trên mỗi trang
+        const perPage = 2; // Products per page
         const products = await productsController.getProductsByPage(page, perPage);
-        res.json(products);
+        res.status(200).json(products);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error fetching paginated products:', error);
+        res.status(500).json({ message: error.message });
     }
 });
 
-// thêm sản phẩm
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/images'); // Thư mục lưu trữ hình ảnh
-    },
-    filename: function (req, file, cb) {
-        // Tên file sẽ được lưu trữ là timestamp hiện tại + tên gốc của file
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
-
-
-const checkImg = ((req, file, cb) => {
-    if (!file.originalname.match(/\.(png|jpg|webp|gif)$/)) {
-        return cb(new Error('Vui lòng nhập đúng định dạng'))
-    }
-    cb(null, true)
-})
-
-const upload = multer({ storage: storage, fileFilter: checkImg });
-
-router.post('/add', upload.fields([
-    { name: 'image_pr_1', maxCount: 1 },
-    // { name: 'image_pr_2', maxCount: 1 },
-    // { name: 'image_pr_3', maxCount: 1 },
-    // { name: 'image_pr_4', maxCount: 1 },
-    // { name: 'image_pr_5', maxCount: 1 }
-]), async (req, res) => {
+router.post('/add', [authen], upload.fields([{ name: 'image_pr_1', maxCount: 1 }]), async (req, res) => {
     try {
+        console.log('Request Body:', req.body);
+        console.log('Request Files:', req.files);
+
         const body = req.body;
         const files = req.files;
 
-        // Lấy chỉ tên tệp của các ảnh tải lên từ req.files và lưu vào body
         if (files) {
             for (const key in files) {
-                body[key] = path.basename(files[key][0].filename);
+                if (files.hasOwnProperty(key)) {
+                    body[key] = path.basename(files[key][0].filename);
+                    console.log(`File saved: ${body[key]}`);
+                }
             }
         }
 
-        const result = await productsController.insertProduct(body);
-        // Tiếp tục xử lý thông tin sản phẩm
-        // Gọi hàm insertProduct từ productController và xử lý kết quả
+        await productsController.insertProduct(body);
 
-        // Chuỗi HTML chứa mã JavaScript để hiển thị cửa sổ cảnh báo
-        const alertScript = `
+        res.send(`
             <script>
                 alert('Thêm sản phẩm thành công');
                 window.location.href = 'http://localhost:1234/admin_product';
             </script>
-        `;
-
-        // Gửi cảnh báo và chuyển hướng về trang http://localhost:1234/admin_product
-        res.send(alertScript);
+        `);
     } catch (error) {
-        console.log('Không thêm sản phẩm được', error);
+        console.error('Error adding product:', error);
         res.status(500).json({ message: error.message });
     }
 });
@@ -144,37 +136,47 @@ router.post('/add', upload.fields([
 router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const proDel = await productsController.removeProduct(id);
-        return res.status(200).json({ message: "Xóa sản phẩm thành công" });
+        await productsController.removeProduct(id);
+        res.status(200).json({ message: "Xóa sản phẩm thành công" });
     } catch (error) {
-        console.log("Lỗi: ", error);
-        return res.status(500).json({ message: error });
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
     }
 });
 
-
-//cập nhật sản phẩm theo id
 router.put('/edit/:id', async (req, res) => {
     try {
-        const { id } = req.params
-        const body = req.body
-        const proUpdate = await productsController.updateByIdProduct(id, body)
-        return res.status(200).json({ ProductUpdate: proUpdate })
+        const { id } = req.params;
+        const body = req.body;
+        const updatedProduct = await productsController.updateByIdProduct(id, body);
+        res.status(200).json({ ProductUpdate: updatedProduct });
     } catch (error) {
-        console.log("Lỗi cập nhật product theo id: ", error);
-        return res.status(500).json({ mess: error })
+        console.error("Error updating product by id: ", error);
+        res.status(500).json({ message: error.message });
     }
 });
 
-router.get('/search/:keyword', async function (req, res) {
+router.get('/search/:keyword', async (req, res) => {
     try {
         const { keyword } = req.params;
         const products = await productsController.searchProduct(keyword);
-        return res.status(200).json(products);
+        res.status(200).json(products);
     } catch (error) {
-        console.error('Lỗi khi tìm kiếm sản phẩm:', error);
-        res.status(500).send('Đã xảy ra lỗi khi tìm kiếm sản phẩm');
+        console.error('Error searching products:', error);
+        res.status(500).json({ message: 'An error occurred while searching for products' });
     }
 });
+
+router.post('/refresh-token', async (req, res, next) => {
+try {
+    let { refresh_token } = req.body;
+    const data = jwt.verify(refresh_token, 'shhhhhh');
+    const access_token = jwt.sign({user: data.user}, 'shhhhhh', {expiresIn: 1 * 60});
+    refresh_token = jwt.sign({user: data.user}, 'shhhhhh', {expiresIn: 90 * 24 * 60 * 60});
+    res.status(200).json({user: data.user, access_token, refresh_token })
+} catch (error) {
+    res.status(414).json({error: error.message})
+}
+})
 
 module.exports = router;

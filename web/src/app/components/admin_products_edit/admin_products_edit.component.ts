@@ -66,7 +66,7 @@ export class Admin_products_editComponent implements OnInit {
         this.products = data;
         this.productsForm.patchValue({
           name_pr: data.name_pr,
-          category_pr_tag: data.category_pr.category_pr_tag, // Đảm bảo rằng key này đúng với key trong form
+          category_pr_tag: data.category_pr_tag, // Đảm bảo rằng key này đúng với key trong form
           price_pr: data.price_pr,
           // image_pr_1: data.image_pr.image_pr_1,
           description_pr: data.description_pr,

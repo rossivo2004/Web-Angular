@@ -5,6 +5,10 @@ const usersController = require('../controller/users.controller');
 const path = require('path');
 const multer = require('multer');
 const usersModel = require('../model/usersModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = 'shhhhhh';
+const JWT_EXPIRES_IN = '1h';
 
 router.get('/', async (req, res) => {
     try {
@@ -16,35 +20,20 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Tạo route để nhận dữ liệu đơn hàng và lưu vào MongoDB
+
+
+// thêm user
 router.post('/add', async (req, res) => {
     try {
-        const { name_us, password_us, user_name_us, image_us, email_us, phone_us, address_us } = req.body;
-
-        // Tạo một đối tượng mới để lưu trữ thông tin đơn hàng và thông tin người nhận
-        const userData = {
-            name_us: name_us,
-            user_name_us: user_name_us,
-            password_us: password_us,
-            image_us: image_us,
-            email_us: email_us,
-            phone_us: phone_us,
-            address_us: address_us
-        };
-
-        // Tạo một đối tượng đơn hàng mới từ mô hình mongoose (usersModel)
-        const newUser = new usersModel(userData); // Sử dụng usersModel thay vì User
-
-        // Lưu đơn hàng mới vào cơ sở dữ liệu
-        const savedOrder = await newUser.save();
-
-        res.status(201).json(savedOrder); // Trả về đơn hàng vừa được tạo thành công
+        const savedUser = await usersController.createUsers(req.body);
+        res.status(201).json(savedUser);
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ message: 'Internal server error' }); // Trả về thông báo lỗi nếu có lỗi xảy ra
+        console.error('Error:', error.message);
+        res.status(500).json({ message: error.message });
     }
 });
 
+// xóa user
 router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -69,6 +58,7 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
+// Chi tiết user
 router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params
@@ -80,6 +70,52 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+// Đăng nhập
+router.post('/login', async (req, res) => {
+  try {
+      const { user_name_us, password_us } = req.body;
 
+      const user = await usersModel.findOne({ user_name_us });
+
+      if (!user) {
+          return res.status(404).json({ message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
+      }
+
+      const isMatch = await bcrypt.compare(password_us, user.password_us); 
+      if (!isMatch) {
+          return res.status(404).json({ message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
+      }
+
+      const accessToken = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: 1 * 60 }); // 1 minute
+      const refreshToken = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: 90 * 24 * 60 * 60 }); // 90 days
+
+      res.status(200).json({ user, access_token: accessToken, refresh_token: refreshToken });
+  } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.post('/forgot_password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const response = await usersController.forgotPassword(email);
+        res.status(200).json(response);
+    } catch (error) {
+        console.error("Error in /forgot_password route:", error.message);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.post('/reset_password', async (req, res) => {
+    try {
+        const { token, password, passwordConfirm } = req.body;
+        const response = await usersController.resetPassword(token, password, passwordConfirm);
+        res.status(200).json(response);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 module.exports = router;

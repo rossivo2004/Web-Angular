@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { Products } from 'src/app/models/products';
+import { CartService } from 'src/app/services/Cart.service';
 
 @Component({
   selector: 'app-product_detail',
@@ -9,12 +10,13 @@ import { Products } from 'src/app/models/products';
   styleUrls: ['./product_detail.component.css'],
 })
 export class Product_detailComponent implements OnInit {
-  product: Products | undefined; // Đảm bảo rằng kiểu dữ liệu của product phù hợp với định nghĩa của Products
+  product: Products | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -22,7 +24,6 @@ export class Product_detailComponent implements OnInit {
     if (id) {
       this.loadProduct(id);
     } else {
-      // Xử lý khi không có id
       console.error('ID is missing');
     }
   }
@@ -35,9 +36,28 @@ export class Product_detailComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching product details:', error);
-        // Xử lý khi có lỗi, ví dụ chuyển hướng đến trang lỗi
         this.router.navigate(['/error']);
       }
     );
+  }
+
+  addToCart(product: Products) {
+    if (product) {
+      this.cartService.addToCart(product);
+      this.toastAddSuccess();
+      this.showProductCartMini();
+    } else {
+      console.error('Product is undefined');
+    }
+  }
+
+  toastAddSuccess() {
+    // Implement your toast notification logic here
+    alert('Thêm sản phẩm thành công');
+  }
+
+  showProductCartMini() {
+    // Implement your logic to show the mini cart here
+    console.log('Showing mini cart');
   }
 }

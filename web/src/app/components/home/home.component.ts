@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
       (data) => {
         this.products = data as Products[];
         console.log(data);
-
+        // const priceNew = data
       },
       (error) => {
         console.error('Error fetching products:', error);

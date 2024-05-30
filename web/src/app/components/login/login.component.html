@@ -1,0 +1,76 @@
+<div class=" lg:bg-slate-200 bg-white w-full h-screen overflow-x-hidden mx-auto lg:pt-10 ct_form__login">
+  <div class="flex flex-wrap -mx-4">
+      <div class="w-full px-4">
+          <div class="max-w-[525px] mx-auto text-center bg-white rounded-lg relative overflow-hidden py-16 px-10 sm:px-12 md:px-[60px]
+              ">
+              <form class="form_login" [formGroup]="usersForm" (ngSubmit)="onSubmit()">
+                  <div class="mb-6">
+                      <input type="text" required="" formControlName="user_name_us" placeholder="Tên đăng nhập" name="lg_username" class="w-full rounded-md
+                      border
+                      bordder-[#E9EDF4]
+                      py-3
+                      px-5
+                      bg-[#FCFDFE]
+                      text-base text-body-color
+                      placeholder-[#ACB6BE]
+                      outline-none
+                      focus-visible:shadow-none
+                      focus:border-primary
+                      " />
+                      <div class="lg_username__error text-red-600 text-start "></div>
+                  </div>
+                  <div class="mb-6">
+                      <input type="password" required="" formControlName="password_us" placeholder="Mật khẩu" name="lg_password" class="
+                      w-full
+                      rounded-md
+                      border
+                      bordder-[#E9EDF4]
+                      py-3
+                      px-5
+                      bg-[#FCFDFE]
+                      text-base text-body-color
+                      placeholder-[#ACB6BE]
+                      outline-none
+                      focus-visible:shadow-none
+                      focus:border-primary
+                      " />
+                      <div class="lg_password__error text-red-600 text-start "></div>
+                  </div>
+                  <div class="mb-10">
+                      <button type="submit" class="
+                      w-full
+                      rounded-md
+                      border
+                      bordder-primary
+                      py-3
+                      px-5
+                      bg-primary
+                      text-base text-white
+                      cursor-pointer
+                      hover:bg-opacity-90
+                      transition
+                      ">
+                          Đăng nhập
+                      </button>
+                  </div>
+              </form>
+
+              <a href="javascript:void(0)" class="
+                text-base
+                inline-block
+                mb-2
+                text-[#adadad]
+                hover:underline hover:text-primary
+                ">
+                  Forget Password?
+              </a>
+              <p class="text-base text-[#adadad]">
+                  Bạn chưa có tài khoản
+                  <span class="text-primary hover:underline hover:cursor-pointer form_change">
+                      Đăng kí
+                  </span>
+              </p>
+          </div>
+      </div>
+  </div>
+</div>

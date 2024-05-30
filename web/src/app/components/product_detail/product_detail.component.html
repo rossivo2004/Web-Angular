@@ -39,7 +39,7 @@
   <div class="flex lg:flex-row flex-col gap-5 w-full mb-14">
     <div class="basis-2/4">
       <div class=" rounded-lg border lg:w-[540px] h-[260px] w-[360px] lg:h-[420px] overflow-hidden mb-3">
-        <img src="./images/s3qqpek5.png" alt="" class="w-full h-full object-cover" id="productPage_img__main">
+        <img src="{{product.image_pr_1}}" alt="" class="w-full h-full object-cover" id="productPage_img__main">
       </div>
       <!-- <div class="w-[360px] lg:w-[540px] flex gap-2">
         <div
@@ -128,11 +128,17 @@
                   </form>
               </div> -->
         <div class="flex w-full gap-2 mb-5">
-          <div
-            class="w-1/2 px-4 py-2 text-primary hover:text-white bg-[#f1f8e9] cursor-pointer border-2 border-primary rounded-lg hover:bg-primary flex items-center justify-center">
-            <i class="fa-solid fa-bag-shopping mr-2"></i>
-            <p class="font-bold">Thêm vào giỏ hàng</p>
-          </div>
+          <button [attr.data-id]="product._id"
+        [attr.data-name]="product.name_pr"
+        [attr.data-price]="product.price_pr"
+        [attr.data-image]="product.image_pr_1"
+        data-quantity="1"
+        (click)="addToCart(product)"
+        class="add_cart w-1/2 px-4 py-2 text-primary hover:text-white bg-[#f1f8e9] cursor-pointer border-2 border-primary rounded-lg hover:bg-primary flex items-center justify-center">
+    <i class="fa-solid fa-bag-shopping mr-2"></i>
+    <p class="font-bold">Thêm vào giỏ hàng</p>
+</button>
+
           <div
             class="w-1/2 flex items-center justify-center text-red-600 border-2 border-red-600 rounded-lg hover:bg-red-600 hover:text-white cursor-pointe bg-red-300">
             <i class="fa-solid fa-heart mr-2"></i>
@@ -141,7 +147,7 @@
         </div>
         <div>
           <p>Thể loại: <span class="p-[2px] bg-[#f1f8e9] text-primary rounded-lg"><a
-                href="">{{product.category_pr.category_pr_tag}}</a></span>
+                href="">{{product.category_pr_tag}}</a></span>
                 <!-- <span
               class="p-[2px] bg-[#f1f8e9] text-primary rounded-lg"><a href="">Lj âdj</a></span> -->
           </p>
