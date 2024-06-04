@@ -9,11 +9,20 @@ import { map } from 'rxjs/operators';
 })
 export class UsersService {
   private url = 'http://localhost:3000';
+  loggedIn = false;
 
   constructor(private httpClient: HttpClient) {}
 
   getUsers(): Observable<Users[]> {
     return this.httpClient.get<Users[]>(`${this.url}/users`);
+  }
+
+  getUserById(id: string): Observable<Users> {
+    return this.httpClient.get<Users>(`${this.url}/users/${id}`);
+  }
+
+  updateUser(id: string, body: Partial<Users>): Observable<Users> {
+    return this.httpClient.put<Users>(`${this.url}/users/edit/${id}`, body);
   }
 
   addUser(body: Users): Observable<Users> {
@@ -25,5 +34,63 @@ export class UsersService {
     .pipe(
       map(response => response)
     );
+  }
+
+  checkLogin(){
+    let jsonData = localStorage.getItem('currentUser');
+    if(jsonData){
+      return JSON.parse(jsonData);
+    }
+    return false;
+  }
+
+  checkAdmin(){
+    let jsonData = localStorage.getItem('currentUser');
+    if(jsonData){
+      if(JSON.parse(jsonData).role == 1){
+        return JSON.parse(jsonData);
+      }
+    }
+    return false;
+  }
+
+  isAuthenticated(){
+    const promise = new Promise<boolean>((resolve, reject) => {
+      let jsonData = localStorage.getItem('currentUser');
+      if(jsonData){
+        this.loggedIn = true;
+        resolve(this.loggedIn);
+      }else{
+        resolve(this.loggedIn);
+      }
+    });
+    return promise;
+  }
+
+  isAdmin(){
+    const promise = new Promise<boolean>((resolve, reject) => {
+      let jsonData = localStorage.getItem('currentUser');
+      if(jsonData){
+        if(JSON.parse(jsonData).role == 1){
+        this.loggedIn = true;
+        resolve(this.loggedIn)
+        }
+      }else{
+        resolve(this.loggedIn);
+      }
+    });
+    return promise;
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem('refresh_token');
+  }
+
+  refreshToken(refreshToken: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.url}/users/refresh-Token`, refreshToken);
   }
 }

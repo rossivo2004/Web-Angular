@@ -39,4 +39,8 @@ export class HomeComponent implements OnInit {
   isDiscounted(product: Products): boolean {
     return parseFloat(product.discount_pr) !== 0;
   }
+
+  formatNumber(number: number): string {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 }

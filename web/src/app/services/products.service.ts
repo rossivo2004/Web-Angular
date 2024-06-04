@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Products } from '../models/products';
-import { Observable, from } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
-import axios from 'axios';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,53 +11,33 @@ import axios from 'axios';
 export class ProductsService {
   private url = 'http://localhost:3000';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private auth: UsersService) {}
 
-  // Hàm này thực hiện gửi yêu cầu với access token
-  private async getRequestOptions() {
-    let accessToken = localStorage.getItem('access_token');
+  private createHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': 'Bearer ' + this.auth.getToken()
+    });
+  }
 
-    // Kiểm tra xem access token có tồn tại không
-    if (!accessToken) {
-      const refreshToken = localStorage.getItem('refresh_token');
-      if (!refreshToken) {
-        // window.location.href = 'http://localhost:4200/login';
-        // Xử lý tại đây nếu không có access token
-        return {};
-      }
-
-      try {
-        const response = await axios.post(`${this.url}/products/refresh-token`, {
-          refresh_token: refreshToken,
-        });
-
-        accessToken = response.data.access_token;
-        if (accessToken) {
-          localStorage.setItem('access_token', accessToken);
-        }
-
-        const newRefreshToken = response.data.refresh_token;
-        if (newRefreshToken) {
-          localStorage.setItem('refresh_token', newRefreshToken);
-        }
-      } catch (error) {
-        console.error('Error refreshing token', error);
-        window.location.href = 'http://localhost:4200/login';
-        return {};
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      if (error.error && typeof error.error === 'string') {
+        errorMessage += `\nError Body: ${error.error}`;
       }
     }
-
-    // Đặt access token trong header của yêu cầu HTTP
-    return {
-      headers: new HttpHeaders().set('Authorization', `Bearer ${accessToken}`)
-    };
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 
   getAllProduct(): Observable<Products[]> {
-    return from(this.getRequestOptions()).pipe(
-      switchMap((requestOptions) =>
-        this.httpClient.get<Products[]>(`${this.url}/products`, requestOptions)
-      ),
+    const headers = this.createHeaders();
+    return this.httpClient.get<Products[]>(`${this.url}/products`, { headers }).pipe(
       catchError(error => {
         console.error('Error fetching all products', error);
         throw error;
@@ -65,23 +45,16 @@ export class ProductsService {
     );
   }
 
-  addProduct(body: Products): Observable<Products> {
-    return from(this.getRequestOptions()).pipe(
-      switchMap((requestOptions) =>
-        this.httpClient.post<Products>(`${this.url}/products/add`, body, requestOptions)
-      ),
-      catchError(error => {
-        console.error('Error adding product', error);
-        throw error;
-      })
+  addProduct(formData: FormData): Observable<any> { // Changed Products to FormData
+    const headers = this.createHeaders();
+    return this.httpClient.post<any>(`${this.url}/products/add`, formData, { headers }).pipe(
+      catchError(this.handleError)
     );
   }
 
   getDetailProduct(id: string): Observable<Products> {
-    return from(this.getRequestOptions()).pipe(
-      switchMap((requestOptions) =>
-        this.httpClient.get<Products>(`${this.url}/products/${id}`, requestOptions)
-      ),
+    const headers = this.createHeaders();
+    return this.httpClient.get<Products>(`${this.url}/products/${id}`, { headers }).pipe(
       catchError(error => {
         console.error(`Error fetching product details for id ${id}`, error);
         throw error;
@@ -89,25 +62,21 @@ export class ProductsService {
     );
   }
 
-  editProduct(id: string, body: Products): Observable<any> {
-    return from(this.getRequestOptions()).pipe(
-      switchMap((requestOptions) =>
-        this.httpClient.put<any>(`${this.url}/products/edit/${id}`, body, requestOptions)
-      ),
+  getProductHot(): Observable<Products[]> {
+    const headers = this.createHeaders();
+    return this.httpClient.get<Products[]>(`${this.url}/products/productsHot`, { headers }).pipe(
       catchError(error => {
-        console.error(`Error editing product for id ${id}`, error);
+        console.error('Error fetching hot products', error);
         throw error;
       })
     );
   }
 
-  getProductHot(): Observable<Products[]> {
-    return from(this.getRequestOptions()).pipe(
-      switchMap((requestOptions) =>
-        this.httpClient.get<Products[]>(`${this.url}/products/productsHot`, requestOptions)
-      ),
+  editProduct(id: string, body: Products): Observable<any> {
+    const headers = this.createHeaders();
+    return this.httpClient.put<any>(`${this.url}/products/edit/${id}`, body, { headers }).pipe(
       catchError(error => {
-        console.error('Error fetching hot products', error);
+        console.error(`Error editing product for id ${id}`, error);
         throw error;
       })
     );

@@ -106,15 +106,11 @@ async function insertProduct(body) {
         // Lấy thông tin từ form
         const { name_pr, description_pr, description_pr_detail, image_pr_1, price_pr, discount_pr, quantity_pr, view_pr, weight_pr, sale_pr, rating_pr, category_pr_tag } = body;
 
-        // Tạo đối tượng productModel với dữ liệu đã được thiết lập giá trị mặc định
         const productData = {
             name_pr,
-
-                // category_pr_name,
-                category_pr_tag,
-
+            category_pr_tag,
             price_pr: price_pr || 0,
-                image_pr_1,
+            image_pr_1,
             description_pr,
             description_pr_detail,
             discount_pr: discount_pr || 0,

@@ -22,4 +22,8 @@ export class FooterComponent implements OnInit {
   removeItem(index: number) {
     this.cartService.removeFromCart(index);
   }
+
+  formatNumber(number: number): string {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 }

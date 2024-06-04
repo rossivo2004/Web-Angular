@@ -12,11 +12,10 @@ export class LoginComponent implements OnInit {
   usersForm!: FormGroup;
   loginError: string | null = null;
 
-    constructor(
-      private usersService: UsersService,
+  constructor(
+    private usersService: UsersService,
     private router: Router
-
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.usersForm = new FormGroup({
@@ -33,7 +32,12 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           localStorage.setItem('access_token', response.access_token);
           localStorage.setItem('refresh_token', response.refresh_token);
-          this.router.navigate(['/']);
+
+          if (response.user.role === 1) {
+            this.router.navigate(['/admin_products']);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error: (err) => {
           console.error('Login error:', err);

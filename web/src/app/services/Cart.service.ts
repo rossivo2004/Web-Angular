@@ -26,7 +26,7 @@ export class CartService {
       currentCart.push({
         productId: product._id ?? "",
         productName: product.name_pr ?? "",
-        productPrice: product.price_pr ?? "",
+        productPrice: product.price_pr * (1 - product.discount_pr / 100) ?? "",
         productImage: product.image_pr_1 ?? "",
         quantity: 1,
       });
@@ -42,5 +42,4 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(currentCart));
     this.cart.next(currentCart);
   }
-
 }

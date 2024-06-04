@@ -39,7 +39,7 @@
   <div class="flex lg:flex-row flex-col gap-5 w-full mb-14">
     <div class="basis-2/4">
       <div class=" rounded-lg border lg:w-[540px] h-[260px] w-[360px] lg:h-[420px] overflow-hidden mb-3">
-        <img src="{{product.image_pr_1}}" alt="" class="w-full h-full object-cover" id="productPage_img__main">
+        <img src="http://localhost:3000/images/{{product.image_pr_1}}" alt="" class="w-full h-full object-cover" id="productPage_img__main">
       </div>
       <!-- <div class="w-[360px] lg:w-[540px] flex gap-2">
         <div
@@ -94,7 +94,7 @@
           <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
           <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
         </div>
-        <div class="text-2xl font-bold mb-5 text-price">{{product.price_pr}}<span class="underline">đ</span></div>
+        <div class="text-2xl font-bold mb-5 text-price">{{formatNumber(+product.price_pr * (1 - +product.discount_pr / 100))}}<span class="text-sm">đ</span></div>
         <div class="text-sm mb-4">
           {{product.description_pr}}
         </div>
@@ -129,11 +129,11 @@
               </div> -->
         <div class="flex w-full gap-2 mb-5">
           <button [attr.data-id]="product._id"
-        [attr.data-name]="product.name_pr"
-        [attr.data-price]="product.price_pr"
-        [attr.data-image]="product.image_pr_1"
-        data-quantity="1"
-        (click)="addToCart(product)"
+                  [attr.data-name]="product.name_pr"
+                  [attr.data-price]="product.price_pr"
+                  [attr.data-image]="product.image_pr_1"
+                  data-quantity="1"
+                  (click)="addToCart(product)"
         class="add_cart w-1/2 px-4 py-2 text-primary hover:text-white bg-[#f1f8e9] cursor-pointer border-2 border-primary rounded-lg hover:bg-primary flex items-center justify-center">
     <i class="fa-solid fa-bag-shopping mr-2"></i>
     <p class="font-bold">Thêm vào giỏ hàng</p>
@@ -169,15 +169,7 @@
       <div class="productDetail_area__a w-full">
         <p class="text-[26px] mb-2 font-bold">Thông tin nhanh</p>
         <div class="text-sm my-2">
-          Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus. Donec pharetra faucibus leo,
-          vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at ex ut, eleifend tristique
-          metus. Integer sit amet auctor ligula, vel dictum orci. Nam feugiat interdum nisl. Ut id
-          velit ac ante maximus gravida. Vivamus lobortis vestibulum mauris a mollis. Nunc mollis
-          tempus lorem eu pulvinar Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus.
-          Donec pharetra faucibus leo, vitae vestibulum leo scelerisque eu. Nam enim dolor, porta at
-          ex ut, eleifend tristique metus. Integer sit amet auctor ligula, vel dictum orci. Nam
-          feugiat interdum nisl. Ut id velit ac ante maximus gravida. Vivamus lobortis vestibulum
-          mauris a mollis. Nunc mollis tempus lorem eu pulvinar
+          {{product.description_pr_detail}}
         </div>
       </div>
       <div class="productDetail_area__b hidden">

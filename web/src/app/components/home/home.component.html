@@ -1,18 +1,18 @@
 <div class="slider z-0 mt-[120px] lg:mt-0">
   <div class="slideshow-container relative">
     <div class="mySlides fade">
-      <img src="https://images.pexels.com/photos/1379636/pexels-photo-1379636.jpeg?auto=compress&cs=tinysrgb&w=600"
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         class="h-[600px] w-full object-cover">
     </div>
 
     <div class="mySlides fade " style="display: none;">
-      <img src="https://images.pexels.com/photos/1379636/pexels-photo-1379636.jpeg?auto=compress&cs=tinysrgb&w=600"
+      <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         class="h-[600px] w-full object-cover">
     </div>
 
     <div class="mySlides fade " style="display: none;">
       <img
-        src="https://images.pexels.com/photos/36762/scarlet-honeyeater-bird-red-feathers.jpg?auto=compress&cs=tinysrgb&w=600"
+        src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         class="h-[600px] w-full object-cover">
     </div>
 
@@ -34,7 +34,7 @@
           class="trs_1s shadow-2xl w-full lg:h-[380px] h-[280px] lg:p-5 p-2 rounded-lg flex flex-col justify-between relative  border-2 border-transparent hover:scale-[1.05] hover:cursor-pointer">
           <div class="flex justify-center">
             <img class="lg:w-[200px] lg:h-[200px] w-[150px] h-[150px] object-cover text-center"
-              src="{{product.image_pr_1}}"
+              src="http://localhost:3000/images/{{product.image_pr_1}}"
               alt="">
           </div>
 
@@ -51,7 +51,7 @@
                 {{product.price_pr}}
               </div>
               <div class="home_productBox__price font-bold lg:text-[13px] text-xs text-price">
-                {{product.price_pr}}đ
+                {{ formatNumber(+product.price_pr * (1 - +product.discount_pr / 100)) }}đ
               </div>
             </div>
 

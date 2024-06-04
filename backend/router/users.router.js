@@ -45,7 +45,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-//cập nhật sản phẩm theo id
+//cập nhật user theo id
 router.put('/edit/:id', async (req, res) => {
     try {
         const { id } = req.params
@@ -95,6 +95,31 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+router.post('/refresh-token', async (req, res) => {
+    try {
+      const { refresh_token } = req.body;
+  
+      if (!refresh_token) {
+        return res.status(401).json({ message: 'Refresh token is required' });
+      }
+  
+      // Xác thực refresh token
+      jwt.verify(refresh_token, JWT_SECRET, (err, user) => {
+        if (err) {
+          return res.status(403).json({ message: 'Invalid refresh token' });
+        }
+  
+        // Tạo access token mới
+        const accessToken = jwt.sign({ userId: user.userId, role: user.role }, JWT_SECRET, { expiresIn: 1 * 60 }); // 1 minute
+        res.status(200).json({ access_token: accessToken });
+      });
+    } catch (error) {
+      console.error('Refresh token error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
 
 router.post('/forgot_password', async (req, res) => {
     try {

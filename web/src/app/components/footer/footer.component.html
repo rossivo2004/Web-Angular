@@ -217,19 +217,19 @@
             </div>
           </div>
 
-          <div class="mt-8">
-            <div class="flow-root">
+          <div class="mt-8 h-full">
+            <div class="flow-root" *ngIf="cartItems || cartItems == []">
               <ul role="list" class="-my-6 divide-y divide-gray-200">
                 <li *ngFor="let item of cartItems; let i = index" class="flex py-6">
                   <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                    <img [src]="item.productImage" [alt]="item.description" class="h-full w-full object-cover object-center">
+                    <img src="http://localhost:3000/images/{{item.productImage}}" alt="" class="h-full w-full object-cover object-center">
                   </div>
 
                   <div class="ml-4 flex flex-1 flex-col">
                     <div>
                       <div class="flex justify-between text-base font-medium text-gray-900">
                         <h3>{{ item.productName }}</h3>
-                        <p class="ml-4">${{ item.productPrice }}</p>
+                        <p class="ml-4">{{ formatNumber(+item.productPrice) }}<span class="text-xs">đ</span></p>
                       </div>
                       <p class="mt-1 text-sm text-gray-500">{{ item.color }}</p>
                     </div>
@@ -245,13 +245,17 @@
                 </li>
               </ul>
             </div>
+            <div *ngIf="!cartItems" class="w-full h-full flex justify-center items-center nav_cart_ic flex-col">
+              <img src="https://www.bedrocktyres.com/imgs/emty.jpg" alt="">
+              <div>Chưa có sản phẩm trong giỏ hàng</div>
+            </div>
           </div>
         </div>
 
-        <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+        <div class="border-t border-gray-200 px-4 py-6 sm:px-6" *ngIf="cartItems">
           <div class="flex justify-between text-base font-medium text-gray-900">
             <p>Tổng </p>
-            <p>${{ totalAmount }}</p>
+            <p>{{ formatNumber(totalAmount) }}<span class="text-xs">đ</span></p>
           </div>
           <p class="mt-0.5 text-sm text-gray-500">Vận chuyển và thuế được tính khi thanh toán.</p>
           <div class="mt-6">

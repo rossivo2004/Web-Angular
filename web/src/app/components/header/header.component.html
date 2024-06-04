@@ -48,7 +48,29 @@
       </div>
       <div class="hd_crtl flex items-center">
         <div class="shrink-0 mx-3 hover:text-hover_1">
-          <a href=""><i class="fa-regular fa-user text-[24px]"></i></a>
+          <a *ngIf="!isLogin" [routerLink]="['/login']"><i class="fa-regular fa-user text-[24px]"></i></a>
+         <div *ngIf="isLogin">
+          <div >
+  <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+    <img class="w-7 h-7 object-cover rounded-full" src="https://cdn.pixabay.com/photo/2022/03/31/01/05/bird-7102006_640.jpg" alt="user photo" style="width: 28px; height: 28px; border-radius: 9999px; object-fit: cover;"/>
+  </button>
+  <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div>Xin chào</div>
+      <div class="font-medium truncate">{{userName}}</div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+      <li>
+        <a [routerLink]="['/my_account']" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Trang cá nhân</a>
+      </li>
+    </ul>
+    <div class="py-2">
+      <a (click)="onLogout()" class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Đăng xuất</a>
+    </div>
+  </div>
+</div>
+
+         </div>
         </div>
         <div class="shrink-0 mx-3 relative hover:text-hover_1">
           <a href=""><i class="fa-regular fa-heart text-[24px]"></i></a>
@@ -60,10 +82,10 @@
             <!-- <ion-icon name="cart-outline" class="text-[27px]"></ion-icon> -->
             <i class="fa-solid fa-cart-shopping text-[24px]"></i>
             <span
-              class="text-[12px] absolute top-[-6px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white">0</span>
+              class="text-[12px] absolute top-[-6px] right-[-8px] w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white">{{totalQuantity}}</span>
           </div>
 
-          <div class="hidden lg:block">0.00<span class="underline">đ</span></div>
+          <div class="hidden lg:block">{{formatNumber(+totalAmount)}}<span class="text-xs">đ</span></div>
         </div>
         <div class="shrink-0 ml-3 lg:hidden">
           <i class="fa-solid fa-bars text-[24px] btn_nav__mobile hover:text-hover_1 hover:cursor-pointer"></i>
@@ -177,12 +199,12 @@
     <div class="lg:hidden" role="dialog" aria-modal="true">
       <!-- Background backdrop, show/hide based on slide-over state. -->
       <div
-        class="nav_menu__mobile  fixed inset-y-0 right-0 z-10 w-11/12 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        class="nav_menu__mobile fixed inset-y-0 right-0 z-10 w-11/12 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10" style="transform: translateX(1000px);">
         <div class="flex items-center justify-between">
           <a href="#" class="-m-1.5 p-1.5">
             <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
           </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-primary hover:text-secondary font-bold">
+          <button type="button" class="btn_closed_nav_mobile -m-2.5 rounded-md p-2.5 text-primary hover:text-secondary font-bold">
             <span class="sr-only">Close menu</span>
             <svg class="h-6 w-6 btn_closed_nav-mobile" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" aria-hidden="true">
@@ -259,3 +281,4 @@
     <!-- End nav mobile -->
   </div>
 </header>
+

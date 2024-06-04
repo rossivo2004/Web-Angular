@@ -1,3 +1,4 @@
+// admin_products.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,6 +7,8 @@ import { Products } from 'src/app/models/products';
 import { ProductsService } from 'src/app/services/products.service';
 import { Categories } from 'src/app/models/categories';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { UsersService } from 'src/app/services/users.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-products',
@@ -16,11 +19,14 @@ export class Admin_productsComponent implements OnInit {
   products!: Products[];
   productsForm!: FormGroup;
   categories!: Categories[];
+  selectedFile: File | null = null;
 
   constructor(
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
-    private router: Router
+    private router: Router,
+    private auth: UsersService,
+    private http: HttpClient
   ) {
     this.productsForm = new FormGroup({
       name_pr: new FormControl(''),
@@ -46,11 +52,29 @@ export class Admin_productsComponent implements OnInit {
   loadProducts() {
     this.productsService.getAllProduct().subscribe(
       (data) => {
-        this.products = data as Products[];
+        this.products = data;
       },
       (error) => {
         console.error('Error fetching products:', error);
-        alert('Có lỗi xảy ra khi tải sản phẩm');
+        if (error && error.status === 401) {
+          const refreshToken = this.auth.getRefreshToken();
+          if (!refreshToken) {
+            this.router.navigate(['/login']);
+            return;
+          }
+          this.auth.refreshToken({ 'refresh_token': refreshToken }).subscribe(
+            (res: any) => {
+              localStorage.setItem('access_token', res.access_token);
+              this.loadProducts();
+            },
+            (refreshError) => {
+              console.error('Error refreshing token:', refreshError);
+              this.router.navigate(['/login']);
+            }
+          );
+        } else {
+          alert('Có lỗi xảy ra khi tải sản phẩm');
+        }
       }
     );
   }
@@ -58,7 +82,7 @@ export class Admin_productsComponent implements OnInit {
   loadCategories() {
     this.categoriesService.getAllCategories().subscribe(
       (data) => {
-        this.categories = data as Categories[];
+        this.categories = data;
       },
       (error) => {
         console.error('Error fetching categories:', error);
@@ -71,10 +95,7 @@ export class Admin_productsComponent implements OnInit {
     const confirmation = confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');
     if (confirmation) {
       try {
-        const response = await fetch(
-          `http://localhost:3000/products/delete/${productId}`,
-          { method: 'DELETE' }
-        );
+        const response = await fetch(`http://localhost:3000/products/delete/${productId}`, { method: 'DELETE' });
         const data = await response.json();
         if (response.ok) {
           alert('Xóa sản phẩm thành công');
@@ -90,17 +111,38 @@ export class Admin_productsComponent implements OnInit {
     }
   }
 
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
   onSubmit() {
-    const productData = this.productsForm.value;
-    this.productsService.addProduct(productData).subscribe(
+    const formData = new FormData();
+    formData.append('name_pr', this.productsForm.get('name_pr')?.value);
+    formData.append('category_pr_tag', this.productsForm.get('category_pr_tag')?.value);
+    formData.append('price_pr', this.productsForm.get('price_pr')?.value);
+    formData.append('description_pr', this.productsForm.get('description_pr')?.value);
+    formData.append('description_pr_detail', this.productsForm.get('description_pr_detail')?.value);
+    formData.append('discount_pr', this.productsForm.get('discount_pr')?.value);
+    formData.append('quantity_pr', this.productsForm.get('quantity_pr')?.value);
+
+    if (this.selectedFile) {
+      formData.append('image_pr_1', this.selectedFile);
+    }
+
+    this.productsService.addProduct(formData).subscribe(
       (data) => {
         alert('Thêm sản phẩm thành công');
+        this.productsForm.reset();
+        this.selectedFile = null;
         this.loadProducts(); // Refresh the product list
-        this.productsForm.reset(); // Reset the form after submission
       },
       (error) => {
-        alert('Error');
-        // window.location.reload();
+        console.error('Error adding product:', error);
+        alert('Có lỗi xảy ra khi thêm sản phẩm');
+        this.productsForm.reset();
+        this.selectedFile = null;
       }
     );
   }

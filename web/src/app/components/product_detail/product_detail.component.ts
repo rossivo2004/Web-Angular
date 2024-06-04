@@ -45,19 +45,29 @@ export class Product_detailComponent implements OnInit {
     if (product) {
       this.cartService.addToCart(product);
       this.toastAddSuccess();
-      this.showProductCartMini();
     } else {
       console.error('Product is undefined');
     }
   }
 
   toastAddSuccess() {
-    // Implement your toast notification logic here
-    alert('Thêm sản phẩm thành công');
+    const toast = document.createElement('div');
+
+    toast.innerHTML = `
+      <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: green; color: white; padding: 10px; border-radius: 8px; z-index: 1000;">
+        Thêm sản phẩm thành công
+        <i class="fa-solid fa-circle-check ml-2"></i>
+      </div>
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 3000);
   }
 
-  showProductCartMini() {
-    // Implement your logic to show the mini cart here
-    console.log('Showing mini cart');
+  formatNumber(number: number): string {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 }

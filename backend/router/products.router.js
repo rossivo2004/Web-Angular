@@ -3,6 +3,7 @@ const router = express.Router();
 const productsController = require('../controller/products.controller');
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
 const authen = require('../middleware/authen');
 const jwt = require('jsonwebtoken');
 
@@ -18,7 +19,7 @@ const storage = multer.diskStorage({
 });
 
 const checkImg = (req, file, cb) => {
-    if (!file.originalname.match(/\.(png|jpg|webp|gif)$/)) {
+    if (!file.originalname.match(/\.(png|jpg|jpeg|webp|gif)$/)) {
         return cb(new Error('Vui lòng nhập đúng định dạng'));
     }
     cb(null, true);
@@ -26,8 +27,30 @@ const checkImg = (req, file, cb) => {
 
 const upload = multer({ storage: storage, fileFilter: checkImg });
 
+router.post('/add', authen, upload.single('image_pr_1'), async (req, res) => {
+    try {
+        console.log('Request Body:', req.body);
+        console.log('Request Files:', req.file);
+
+        const body = req.body;
+        const file = req.file;
+
+        if (file) {
+            body.image_pr_1 = path.basename(file.filename);
+            console.log(`File saved: ${body.image_pr_1}`);
+        }
+
+        await productsController.insertProduct(body);
+
+        res.status(200).json({ message: 'Thêm sản phẩm thành công', product: body });
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
+  
 // Route Handlers
-router.get('/', async (req, res) => {
+router.get('/',  async (req, res) => {
     try {
         const products = await productsController.getAllProduct();
         res.status(200).json(products);
@@ -102,49 +125,39 @@ router.get('/page/:page', async (req, res) => {
     }
 });
 
-router.post('/add', [authen], upload.fields([{ name: 'image_pr_1', maxCount: 1 }]), async (req, res) => {
-    try {
-        console.log('Request Body:', req.body);
-        console.log('Request Files:', req.files);
 
-        const body = req.body;
-        const files = req.files;
 
-        if (files) {
-            for (const key in files) {
-                if (files.hasOwnProperty(key)) {
-                    body[key] = path.basename(files[key][0].filename);
-                    console.log(`File saved: ${body[key]}`);
-                }
-            }
-        }
-
-        await productsController.insertProduct(body);
-
-        res.send(`
-            <script>
-                alert('Thêm sản phẩm thành công');
-                window.location.href = 'http://localhost:1234/admin_product';
-            </script>
-        `);
-    } catch (error) {
-        console.error('Error adding product:', error);
-        res.status(500).json({ message: error.message });
-    }
-});
-
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', authen, async (req, res) => {
     try {
         const { id } = req.params;
+
+        // Fetch the product to get the image filename
+        const product = await productsController.getProductById(id);
+
+        if (!product) {
+            return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+        }
+
+        // Remove the product
         await productsController.removeProduct(id);
-        res.status(200).json({ message: "Xóa sản phẩm thành công" });
+
+        // Delete the image file
+        const imagePath = path.join(__dirname, '../public/images/', product.image_pr_1);
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error('Error deleting image file:', err);
+                return res.status(500).json({ message: 'Lỗi xóa tệp hình ảnh' });
+            }
+
+            res.status(200).json({ message: "Xóa sản phẩm thành công" });
+        });
     } catch (error) {
         console.error("Error: ", error);
         res.status(500).json({ message: error.message });
     }
 });
 
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', authen, async (req, res) => {
     try {
         const { id } = req.params;
         const body = req.body;

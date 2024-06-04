@@ -1,19 +1,24 @@
+// authen.js
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
+const JWT_SECRET = 'shhhhhh';
 
 const authen = async (req, res, next) => {
     try {
-        if(req.headers.authorization){
+        if (req.headers.authorization) {
             const token = req.headers.authorization.split(' ')[1];
-            const data = jwt.verify(token, 'shhhhhh');
+            const data = jwt.verify(token, JWT_SECRET);
             req.user = data.user;
-            console.log('Authenticated user:', req.user);
             next();
-        }else{
-            res.status(401).json({ message: 'Access denied' });
+        } else {
+            res.status(401).json({ message: 'Access denied A' });
         }
     } catch (error) {
-        console.error('JWT Verification Error:', error);
-        res.status(401).json({ message: 'Access denied' });
+        if (error.name === 'TokenExpiredError') {
+            res.status(401).json({ message: 'Token expired' });
+        } else {
+            res.status(401).json({ message: 'Invalid token' });
+        }
     }
 }
 

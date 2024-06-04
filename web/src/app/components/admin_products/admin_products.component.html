@@ -72,10 +72,9 @@
                 <div class="col-span-2 sm:col-span-1">
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Ảnh</label>
                   <input
-                    #fileInput
                     class="block w-full text-sm text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
                     aria-describedby="file_input_help" id="image_pr_1" type="file" name="image_pr_1"
-                    formControlName="image_pr_1">
+                    (change)="onFileChange($event)">
                   <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF.</p>
                 </div>
                 <div class="col-span-2">
@@ -147,9 +146,9 @@
                 # {{product._id}}
               </th>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                <!-- <img *ngIf="product.image_pr?.image_pr_1" [src]="product.image_pr.image_pr_1" alt="Product Image"
+                <img *ngIf="product.image_pr_1" src="http://localhost:3000/images/{{product.image_pr_1}}" alt="Product Image"
                   class="w-20 h-20 object-cover" />
-                <span *ngIf="!product.image_pr?.image_pr_1">No Image</span> -->
+                <span *ngIf="!product.image_pr_1">No Image</span>
               </td>
               <td class="px-6 py-4">
                 {{product.name_pr}}
