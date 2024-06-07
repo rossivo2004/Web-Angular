@@ -33,7 +33,7 @@
         <a [routerLink]="['/product_detail', product._id]"
           class="trs_1s shadow-2xl w-full lg:h-[380px] h-[280px] lg:p-5 p-2 rounded-lg flex flex-col justify-between relative  border-2 border-transparent hover:scale-[1.05] hover:cursor-pointer">
           <div class="flex justify-center">
-            <img class="lg:w-[200px] lg:h-[200px] w-[150px] h-[150px] object-cover text-center"
+            <img class="lg:w-[220px] lg:h-[220px] w-[150px] h-[150px] object-cover text-center rounded"
               src="http://localhost:3000/images/{{product.image_pr_1}}"
               alt="">
           </div>
@@ -42,11 +42,11 @@
             <div class="home_productBox__name text-xs lg:text-base">
               {{product.name_pr}}
             </div>
-            <div class="home_productBox__category text-sm  my-2 text-primary font-bold lg:text-sm ">
+            <div class="home_productBox__category text-sm  my-2 text-primary font-bold lg:text-sm mb-3">
               <kbd
                 class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">{{product.category_pr_tag}}</kbd>
             </div>
-            <div class="flex">
+            <div class="flex mb-2">
               <div class="home_productBox__price_old mr-2 font-bold lg:text-[11px] text-xs text-[#BDBDBD] line-through">
                 {{product.price_pr}}
               </div>
@@ -250,7 +250,7 @@
         Sản phẩm
         giảm giá
       </h1>
-      <div class="flex flex-col">
+      <div class="flex flex-col" *ngFor="let product_sale of productsSale">
         <!-- Start box -->
         <div
           class="w-full h-[500px] lg:h-[240px] flex border rounded-lg mb-4 overflow-hidden flex-col lg:flex-row relative">
@@ -259,10 +259,10 @@
               class="w-full h-full object-cover" alt="">
           </a>
           <div class="absolute top-1 right-1 lg:top-4 lg:right-6 bg-yellow-500 rounded-3xl text-black px-5 py-1">
-            -10%
+            -{{product_sale.discount_pr}}%
           </div>
           <div class="basis-2/3 lg:p-8 flex flex-col justify-around relative p-2">
-            <p class="lg:text-base font-bold">Organic Avocado Packed With Healthy Fats</p>
+            <p class="lg:text-base font-bold">{{product_sale.name_pr}}</p>
             <div class="flex items-center">
               <div class="flex items-center">
                 <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -295,12 +295,12 @@
                 <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
               </div>
             </div>
-            <div class="flex">
+            <div class="flex items-end">
               <div class="home_productBox__price_old mr-2 font-bold lg:text-[14px] text-xs text-[#BDBDBD] line-through">
-                100.000đ
+                {{formatNumber(+product_sale.price_pr)}}<span class="text-xs">đ</span>
               </div>
               <div class="home_productBox__price font-bold lg:text-[16px] text-xs text-price">
-                100.000đ
+                {{ formatNumber(+product_sale.price_pr * (1 - +product_sale.discount_pr / 100)) }}<span class="text-sm">đ</span>
               </div>
             </div>
             <div>
@@ -314,10 +314,6 @@
           </div>
         </div>
         <!-- End box -->
-
-
-        <!-- End box -->
-
       </div>
     </div>
   </div>

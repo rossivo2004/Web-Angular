@@ -7,6 +7,8 @@ import {
   ComponentFactoryResolver,
   Renderer2
 } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Nav_list_categoriesComponent } from '../nav_list_categories/nav_list_categories.component';
 import { UsersService } from 'src/app/services/users.service';
 import { CartService } from 'src/app/services/Cart.service';
@@ -23,6 +25,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   cartItems: any[] = [];
   totalAmount: number = 0;
   totalQuantity: number = 0;
+  keyword!: string;
 
   @ViewChild('navListCategoriesContainer', { read: ViewContainerRef })
   navListCategoriesContainer!: ViewContainerRef;
@@ -31,7 +34,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private auth: UsersService,
     private cartService: CartService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
+
   ) {
     this.isLogin = this.auth.checkLogin();
     this.isAdmin = this.auth.checkAdmin();
@@ -79,6 +84,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         nav_mobile.style.transform = transform === 'translateX(0px)' ? 'translateX(1000px)' : 'translateX(0px)';
       });
     }
+  }
+
+  onSearch() {
+    this.router.navigate(['/shop'], { queryParams: { keyword: this.keyword } });
   }
 
 

@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
 
           if (response.user.role === 1) {
             this.router.navigate(['/admin_products']);
+            // window.location.reload();
           } else {
             this.router.navigate(['/']);
           }

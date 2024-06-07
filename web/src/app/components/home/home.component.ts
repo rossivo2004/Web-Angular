@@ -11,6 +11,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class HomeComponent implements OnInit {
   products!: Products[];
+  productsSale!: Products[];
 
   constructor(
     private productsService: ProductsService,
@@ -33,9 +34,14 @@ export class HomeComponent implements OnInit {
         alert('Có lỗi xảy ra khi tải sản phẩm');
       }
     );
+
+    this.productsService.getProductSale().subscribe((data) => {
+      this.productsSale = data as Products[];
+      console.log(data);
+      // const priceNew = data
+    })
   }
 
-  // Method to check if the product has a discount
   isDiscounted(product: Products): boolean {
     return parseFloat(product.discount_pr) !== 0;
   }

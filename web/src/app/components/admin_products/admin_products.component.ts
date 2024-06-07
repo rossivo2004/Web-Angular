@@ -52,7 +52,7 @@ export class Admin_productsComponent implements OnInit {
   loadProducts() {
     this.productsService.getAllProduct().subscribe(
       (data) => {
-        this.products = data;
+        this.products = (data as any).products as Products[];
       },
       (error) => {
         console.error('Error fetching products:', error);
@@ -99,7 +99,7 @@ export class Admin_productsComponent implements OnInit {
         const data = await response.json();
         if (response.ok) {
           alert('Xóa sản phẩm thành công');
-          this.loadProducts(); // Refresh the product list
+          this.loadProducts();
         } else {
           console.error('Error deleting product:', data);
           alert('Có lỗi xảy ra khi xóa sản phẩm');
@@ -131,18 +131,36 @@ export class Admin_productsComponent implements OnInit {
       formData.append('image_pr_1', this.selectedFile);
     }
 
+
+
     this.productsService.addProduct(formData).subscribe(
       (data) => {
         alert('Thêm sản phẩm thành công');
         this.productsForm.reset();
         this.selectedFile = null;
-        this.loadProducts(); // Refresh the product list
+        this.loadProducts();
       },
       (error) => {
-        console.error('Error adding product:', error);
-        alert('Có lỗi xảy ra khi thêm sản phẩm');
-        this.productsForm.reset();
-        this.selectedFile = null;
+        console.error('Error fetching products:', error);
+        if (error && error.status === 401) {
+          const refreshToken = this.auth.getRefreshToken();
+          if (!refreshToken) {
+            this.router.navigate(['/login']);
+            return;
+          }
+          this.auth.refreshToken({ 'refresh_token': refreshToken }).subscribe(
+            (res: any) => {
+              localStorage.setItem('access_token', res.access_token);
+              this.loadProducts();
+            },
+            (refreshError) => {
+              console.error('Error refreshing token:', refreshError);
+              this.router.navigate(['/login']);
+            }
+          );
+        } else {
+          alert('Có lỗi xảy ra khi tải sản phẩm');
+        }
       }
     );
   }

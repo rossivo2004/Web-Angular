@@ -6,6 +6,6 @@
   </button>
   <div
     class="dropdown-content bg-white text-black absolute top-[60px] w-[230px] p-3 rounded-b-lg border border-primary">
-    <a class="py-1 hover:text-primary" *ngFor="let category of categories">{{ category.name_ct }}</a>
+    <a href="http://localhost:4200/shop?tagname={{category.tag_ct}}" class="py-1 hover:text-primary" *ngFor="let category of categories">{{ category.name_ct }}</a>
   </div>
 </div>

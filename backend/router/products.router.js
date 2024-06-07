@@ -48,12 +48,22 @@ router.post('/add', authen, upload.single('image_pr_1'), async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-  
+    
 // Route Handlers
-router.get('/',  async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const products = await productsController.getAllProduct();
-        res.status(200).json(products);
+        const result = await productsController.getAllProduct(req.query);
+        res.status(200).json({ products: result });
+    } catch (error) {
+        console.error("Error: ", error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/admin_pr', authen, async (req, res) => {
+    try {
+        const result = await productsController.getAllProduct(req.query);
+        res.status(200).json({ products: result });
     } catch (error) {
         console.error("Error: ", error);
         res.status(500).json({ message: error.message });
@@ -169,9 +179,9 @@ router.put('/edit/:id', authen, async (req, res) => {
     }
 });
 
-router.get('/search/:keyword', async (req, res) => {
+router.get('/search', async (req, res) => {
     try {
-        const { keyword } = req.params;
+        const { keyword } = req.query;
         const products = await productsController.searchProduct(keyword);
         res.status(200).json(products);
     } catch (error) {
@@ -179,7 +189,6 @@ router.get('/search/:keyword', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while searching for products' });
     }
 });
-
 router.post('/refresh-token', async (req, res, next) => {
 try {
     let { refresh_token } = req.body;

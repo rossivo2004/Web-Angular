@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Products } from '../models/products';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 export class ProductsService {
   private url = 'http://localhost:3000';
 
-  constructor(private httpClient: HttpClient, private auth: UsersService) {}
+  constructor(private httpClient: HttpClient, private auth: UsersService) { }
 
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({
@@ -37,7 +37,7 @@ export class ProductsService {
 
   getAllProduct(): Observable<Products[]> {
     const headers = this.createHeaders();
-    return this.httpClient.get<Products[]>(`${this.url}/products`, { headers }).pipe(
+    return this.httpClient.get<Products[]>(`${this.url}/products/admin_pr`, { headers }).pipe(
       catchError(error => {
         console.error('Error fetching all products', error);
         throw error;
@@ -80,5 +80,26 @@ export class ProductsService {
         throw error;
       })
     );
+  }
+
+  getProductSale(): Observable<Products[]> {
+    const headers = this.createHeaders();
+    return this.httpClient.get<Products[]>(`${this.url}/products/discount/discountedProducts`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error fetching hot products', error);
+        throw error;
+      })
+    );
+  }
+
+  getProductByQuery(params: any) {
+    console.log(params);
+    let query = '';
+    if (params.keyword) {
+      query = `keyword=${params.keyword}`;
+    }else if (params.tagname){
+      query = `tagname=${params.tagname}`;
+    }
+    return this.httpClient.get(`${this.url}/products?${query}`)
   }
 }

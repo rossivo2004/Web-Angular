@@ -28,6 +28,7 @@ import { AdminGuard } from './auth/admin-guard';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'shop', component: ShopComponent },
+  { path: 'shop/:tagname', component: ShopComponent },
   { path: 'login', component: LoginComponent },
   { path: 'my_account', component: MyAccountComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },

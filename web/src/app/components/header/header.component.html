@@ -37,11 +37,12 @@
       <div class="hd_search hidden lg:block">
         <form class="relative">
           <span>
-            <input type="text"
+            <!-- {{this.keyword}} -->
+            <input type="text" name="keyword" [(ngModel)]="keyword"
               class="w-[460px] h-12 rounded-lg pl-4 pr-10 outline-0 border-radius border bg-transparent"
               placeholder="Search..." placeholder="Search here">
           </span>
-          <button class="absolute top-[14px] right-[10px] hover:text-secondary">
+          <button class="absolute top-[14px] right-[10px] hover:text-secondary" (click)="onSearch()">
             <i class="fa-solid fa-magnifying-glass text-xl"></i>
           </button>
         </form>

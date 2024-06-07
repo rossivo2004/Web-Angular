@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,7 +13,7 @@ export class ResetPasswordComponent implements OnInit {
   passwordConfirm: string = '';
   token: string = '';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
@@ -31,6 +32,7 @@ export class ResetPasswordComponent implements OnInit {
         passwordConfirm: this.passwordConfirm
       }).toPromise();
       alert('Password reset successful');
+this.router.navigate(['/login']);
     } catch (error) {
       console.error(error);
       alert('Error resetting password');

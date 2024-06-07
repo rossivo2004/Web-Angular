@@ -2,15 +2,11 @@
 const mongoose = require('mongoose');
 
 const productsModel = require('../model/productsModel');
+const productsService = require('../services/products.service')
 
-async function getAllProduct() {
-    try {
-        const result = await productsModel.find();
-        return result;
-    } catch (error) {
-        console.log('Loi: ', error);
-        throw error;
-    }
+async function getAllProduct(query) {
+    const products = await productsService.getAllProducts(query);
+    return products;
 }
 
 // Lấy sản phẩm nổi bật
@@ -165,8 +161,8 @@ async function updateByIdProduct(id, body) {
         pro.weight_pr = weight_pr;
         pro.sale_pr = sale_pr;
         pro.rating_pr = rating_pr;
-pro.category_pr_tag = category_pr_tag;
-pro.image_pr_1 = image_pr_1;
+        pro.category_pr_tag = category_pr_tag;
+        pro.image_pr_1 = image_pr_1;
 
         // Lưu thay đổi vào cơ sở dữ liệu
         const result = await pro.save();
@@ -182,10 +178,10 @@ pro.image_pr_1 = image_pr_1;
 // tìm kiếm sản phẩm
 async function searchProduct(keyword) {
     try {
-        const result = await productsModel.find({ name_pr: { $regex: `.*${keyword}.*`, $options: 'i' } });
+        const result = await productsModel.find({ $text: { $search: keyword } });
         return result;
     } catch (error) {
-        console.log("Lỗi: ", error);
+        console.log('Loi: ', error);
         throw error;
     }
 }

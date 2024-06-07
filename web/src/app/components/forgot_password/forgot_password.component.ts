@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot_password',
@@ -9,7 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class ForgotPasswordComponent implements OnInit {
   email: string = '';
 
-  constructor(private http: HttpClient) { }
+
+    constructor(private http: HttpClient, private router: Router,) { }
 
   ngOnInit() {
   }
@@ -20,6 +22,8 @@ export class ForgotPasswordComponent implements OnInit {
       this.http.post('http://localhost:3000/users/forgot_password', { email }).subscribe(
         (response: any) => {
           console.log('Email sent successfully:', response);
+          alert('VUi lòng check email');
+this.router.navigate(['/login']);
           // Optionally, display a success message to the user
         },
         (error) => {
