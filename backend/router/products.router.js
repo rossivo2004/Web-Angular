@@ -123,6 +123,7 @@ router.get('/sanphamlienquan/:productid', async (req, res) => {
     }
 });
 
+// phân trang
 router.get('/page/:page', async (req, res) => {
     try {
         const page = parseInt(req.params.page);
@@ -134,8 +135,6 @@ router.get('/page/:page', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
-
 
 router.delete('/delete/:id', authen, async (req, res) => {
     try {
@@ -189,6 +188,7 @@ router.get('/search', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while searching for products' });
     }
 });
+
 router.post('/refresh-token', async (req, res, next) => {
 try {
     let { refresh_token } = req.body;
@@ -200,5 +200,19 @@ try {
     res.status(414).json({error: error.message})
 }
 })
+
+// tăng số lượt xem sản phẩm theo id
+router.post('/increment-view/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedProduct = await productsController.incrementProductView(id);
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        console.error("Error incrementing product view: ", error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 
 module.exports = router;

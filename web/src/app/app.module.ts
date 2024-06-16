@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { MyAccountComponent } from './components/my_account/my_account.component';
 import { Admin_categoryComponent } from './components/admin_category/admin_category.component';
@@ -28,6 +29,7 @@ import { AdminGuard } from './auth/admin-guard';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'shop', component: ShopComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'shop/:tagname', component: ShopComponent },
   { path: 'login', component: LoginComponent },
   { path: 'my_account', component: MyAccountComponent, canActivate: [AuthGuard] },
@@ -56,6 +58,7 @@ const routes: Routes = [
     MyAccountComponent,
     FooterComponent,
     ShopComponent,
+    CheckoutComponent,
     LoginComponent,
     RegisterComponent,
     Nav_list_categoriesComponent,

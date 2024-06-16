@@ -37,6 +37,16 @@ export class ProductsService {
 
   getAllProduct(): Observable<Products[]> {
     const headers = this.createHeaders();
+    return this.httpClient.get<Products[]>(`${this.url}/products/`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error fetching all products', error);
+        throw error;
+      })
+    );
+  }
+
+  getAllProductAdmin(): Observable<Products[]> {
+    const headers = this.createHeaders();
     return this.httpClient.get<Products[]>(`${this.url}/products/admin_pr`, { headers }).pipe(
       catchError(error => {
         console.error('Error fetching all products', error);

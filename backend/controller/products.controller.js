@@ -63,7 +63,7 @@ async function getProductByCategoryTag(categoryTag) {
     }
 }
 
-
+// lấy sản phẩm liên quan
 async function getRelatedProducts(productId) {
     try {
         const product = await productsModel.findById(productId);
@@ -186,8 +186,24 @@ async function searchProduct(keyword) {
     }
 }
 
+// tăng số lượt xem sản phẩm theo id
+async function incrementProductView(productId) {
+    try {
+        const product = await productsModel.findById(productId);
+        if (!product) {
+            throw new Error('Sản phẩm không tồn tại');
+        }
+        product.view_pr = (product.view_pr || 0) + 1;
+        await product.save();
+        return product;
+    } catch (error) {
+        console.error('Lỗi khi cập nhật số lượt xem:', error);
+        throw error;
+    }
+}
 
 module.exports = {
     getAllProduct, getProductsHot, getProductById, getProductByCategoryTag, getDiscountedProducts,
-    getRelatedProducts, getProductsByPage, insertProduct, removeProduct, updateByIdProduct, searchProduct
+    getRelatedProducts, getProductsByPage, insertProduct, removeProduct, updateByIdProduct, searchProduct,
+    incrementProductView
 };

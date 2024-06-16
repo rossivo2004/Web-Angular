@@ -50,7 +50,7 @@ export class Admin_productsComponent implements OnInit {
   }
 
   loadProducts() {
-    this.productsService.getAllProduct().subscribe(
+    this.productsService.getAllProductAdmin().subscribe(
       (data) => {
         this.products = (data as any).products as Products[];
       },

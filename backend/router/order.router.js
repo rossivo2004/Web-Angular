@@ -9,41 +9,21 @@ const Order = require('../model/orderModel'); // Adjust the path as necessary
 router.get('/', async (req, res) => {
     try {
         const orders = await ordersController.getAllOrders();
-        return res.status(200).json(orders);
+        res.status(200).json(orders);
     } catch (error) {
-        console.log("loi: ", error);
-        res.status(500).json({ mess: error });
+        console.log("Error:", error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
-
-// Tạo route để nhận dữ liệu đơn hàng và lưu vào MongoDB
 router.post('/add', async (req, res) => {
     try {
-        const { cartItems, totalAmount, userId, orderDate, status, fullName, phoneNumber, address } = req.body;
-
-        // Tạo một đối tượng mới để lưu trữ thông tin đơn hàng và thông tin người nhận
-        const orderData = {
-            cartItems: cartItems,
-            totalAmount: totalAmount,
-            userId, userId,
-            orderDate: orderDate,
-            status: status,
-            fullName: fullName,
-            phoneNumber: phoneNumber,
-            address: address
-        };
-
-        // Tạo một đối tượng đơn hàng mới từ mô hình mongoose
-        const newOrder = new Order(orderData);
-
-        // Lưu đơn hàng mới vào cơ sở dữ liệu
-        const savedOrder = await newOrder.save();
-
-        res.status(201).json(savedOrder); // Trả về đơn hàng vừa được tạo thành công
+        const orderData = req.body;
+        const newOrder = await ordersController.createOrder(orderData);
+        res.status(201).json(newOrder);
     } catch (error) {
         console.error('Error:', error);
-        res.status(500).json({ message: 'Internal server error' }); // Trả về thông báo lỗi nếu có lỗi xảy ra
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 

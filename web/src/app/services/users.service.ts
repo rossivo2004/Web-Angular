@@ -3,15 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Users } from '../models/users';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  private userLo = new BehaviorSubject<any[]>(this.getUserFromLocalStorage());
   private url = 'http://localhost:3000';
   loggedIn = false;
 
   constructor(private httpClient: HttpClient) {}
+
+  private getUserFromLocalStorage(): any[] {
+    const userData = localStorage.getItem('currentUser');
+    return userData ? JSON.parse(userData) : [];
+  }
 
   getUsers(): Observable<Users[]> {
     return this.httpClient.get<Users[]>(`${this.url}/users`);

@@ -5,7 +5,7 @@ const productsSchema = new Schema({
     name_pr: { type: String, required: true },
     category_pr_tag: { type: String, required: true },
     price_pr: { type: Number, required: true },
-        image_pr_1: { type: String, require: true },
+    image_pr_1: { type: String, require: true },
     description_pr: { type: String, required: true },
     description_pr_detail: { type: String, required: true },
     discount_pr: { type: Number, require: true },

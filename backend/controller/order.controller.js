@@ -6,16 +6,15 @@ async function getAllOrders() {
         const result = await ordersModel.find();
         return result;
     } catch (error) {
-        console.log('Loi: ', error);
+        console.log('Error:', error);
         throw error;
     }
 }
 
-async function createOrders(body) {
+async function createOrder(body) {
     try {
         const { cartItems, totalAmount, userId, orderDate, status, fullName, phoneNumber, address } = body;
 
-        // Create an object to store order information
         const orderData = {
             cartItems: cartItems,
             totalAmount: totalAmount,
@@ -27,15 +26,11 @@ async function createOrders(body) {
             address: address
         };
 
-        // Create a new order object using the Order model
-        const newOrder = new Order(orderData);
-
-        // Save the new order to the database
+        const newOrder = new ordersModel(orderData);
         const savedOrder = await newOrder.save();
-
-        return savedOrder; // Return the newly created order
+        return savedOrder;
     } catch (error) {
-        console.log('Error: ', error);
+        console.log('Error:', error);
         throw error;
     }
 }
@@ -68,4 +63,4 @@ async function getOrderByIdUser(userId) {
 
 
 
-module.exports = { getAllOrders, createOrders, getOrderById, getOrderByIdUser };
+module.exports = { getAllOrders, createOrder, getOrderById, getOrderByIdUser };
